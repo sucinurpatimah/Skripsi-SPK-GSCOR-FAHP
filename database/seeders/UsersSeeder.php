@@ -15,21 +15,24 @@ class UsersSeeder extends Seeder
     {
         $userData = [
             [
-                'name' => 'Admin',
+                'name' => 'Turini',
                 'email' => 'admin@gmail.com',
                 'role' => 'admin',
                 'password' => bcrypt('123456')
             ],
             [
-                'name' => 'Manager',
+                'name' => 'Hilman Sultoni',
                 'email' => 'manager@gmail.com',
                 'role' => 'manager',
                 'password' => bcrypt('123456')
             ]
         ];
 
-        foreach ($userData as $key => $val) {
-            User::create($val);
+        foreach ($userData as $val) {
+            User::updateOrCreate(
+                ['email' => $val['email']], // cari berdasarkan email
+                $val // update data jika email ditemukan
+            );
         }
     }
 }

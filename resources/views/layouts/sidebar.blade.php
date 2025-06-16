@@ -12,43 +12,72 @@
                     Dashboard
                 </a>
 
-                <!-- Kelola Data SCM -->
-                <a class="nav-link collapsed mb-2" href="#" data-bs-toggle="collapse"
-                    data-bs-target="#collapseSCM" aria-expanded="false" aria-controls="collapseSCM">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                    Kelola Data SCM
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
+                {{-- Jika admin --}}
+                @if (Auth::user()->role == 'admin')
+                    <a class="nav-link collapsed mb-2" href="#" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSCM" aria-expanded="false" aria-controls="collapseSCM">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Kelola Data SCM
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseSCM" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested">
+                            <a class="nav-link mb-2" href="#"><i class="fas fa-clipboard-list me-2"></i> Data
+                                Perencanaan</a>
+                            <a class="nav-link mb-2" href="#"><i class="fas fa-truck-loading me-2"></i> Data
+                                Pengadaan</a>
+                            <a class="nav-link mb-2" href="#"><i class="fas fa-industry me-2"></i> Data
+                                Produksi</a>
+                            <a class="nav-link mb-2" href="#"><i class="fas fa-shipping-fast me-2"></i> Data
+                                Distribusi</a>
+                            <a class="nav-link mb-2" href="#"><i class="fas fa-undo-alt me-2"></i> Data
+                                Pengembalian</a>
+                        </nav>
+                    </div>
 
-                <div class="collapse" id="collapseSCM" data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested">
-                        <a class="nav-link mb-2" href="#"><i class="fas fa-clipboard-list me-2"></i> Data
-                            Perencanaan</a>
-                        <a class="nav-link mb-2" href="#"><i class="fas fa-truck-loading me-2"></i> Data
-                            Pengadaan</a>
-                        <a class="nav-link mb-2" href="#"><i class="fas fa-industry me-2"></i> Data Produksi</a>
-                        <a class="nav-link mb-2" href="#"><i class="fas fa-shipping-fast me-2"></i> Data
-                            Distribusi</a>
-                        <a class="nav-link mb-2" href="#"><i class="fas fa-undo-alt me-2"></i> Data
-                            Pengembalian</a>
-                    </nav>
-                </div>
+                    <a class="nav-link mb-3" href="#">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Kelola Data GSCOR
+                    </a>
+                    <a class="nav-link mb-3" href="#">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Kelola Data KPI
+                    </a>
+                    <a class="nav-link mb-3" href="#">
+                        <div class="sb-nav-link-icon"><i class="fas fa-calculator"></i></div> Kelola Perhitungan
+                    </a>
 
-                <!-- Menu Lain -->
-                <a class="nav-link mb-3" href="#">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                    Kelola Data GSCOR
-                </a>
+                    {{-- Jika manager --}}
+                @elseif(Auth::user()->role == 'manager')
+                    <a class="nav-link collapsed mb-2" href="#" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSCM" aria-expanded="false" aria-controls="collapseSCM">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Data SCM
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseSCM" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested">
+                            <a class="nav-link mb-2" href="#"><i class="fas fa-clipboard-list me-2"></i> Data
+                                Perencanaan</a>
+                            <a class="nav-link mb-2" href="#"><i class="fas fa-truck-loading me-2"></i> Data
+                                Pengadaan</a>
+                            <a class="nav-link mb-2" href="#"><i class="fas fa-industry me-2"></i> Data
+                                Produksi</a>
+                            <a class="nav-link mb-2" href="#"><i class="fas fa-shipping-fast me-2"></i> Data
+                                Distribusi</a>
+                            <a class="nav-link mb-2" href="#"><i class="fas fa-undo-alt me-2"></i> Data
+                                Pengembalian</a>
+                        </nav>
+                    </div>
 
-                <a class="nav-link mb-3" href="#">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                    Kelola Data KPI
-                </a>
-
-                <a class="nav-link mb-3" href="#">
-                    <div class="sb-nav-link-icon"><i class="fas fa-calculator"></i></div>
-                    Kelola Perhitungan
-                </a>
+                    <a class="nav-link mb-3" href="#">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Data GSCOR
+                    </a>
+                    <a class="nav-link mb-3" href="#">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Data KPI
+                    </a>
+                    <a class="nav-link mb-3" href="#">
+                        <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div> Laporan
+                    </a>
+                @endif
 
             </div>
         </div>

@@ -20,8 +20,6 @@ class AdminController extends Controller
 
     function manager()
     {
-        echo "Selamat Datang di Halaman Manager";
-        echo "<br></br>";
-        echo "<a href='/logout'> Logout </a>";
+        return view('manager/index');
     }
 }

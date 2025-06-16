@@ -17,7 +17,7 @@
     </div>
     <div class="container">
         <div class="w-50 center border rounded px-3 py-3 mx-auto">
-            <h1>Login</h1>
+            <h1 style="text-align: center;">Login</h1>
             <!-- error message -->
             @if ($errors->any())
                 <div class="alert alert-danger">
