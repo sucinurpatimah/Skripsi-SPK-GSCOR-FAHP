@@ -5,7 +5,8 @@
             <div class="nav">
 
                 <!-- Dashboard -->
-                <a class="nav-link mb-3 {{ request()->is('dashboard') ? 'active' : '' }}" href="">
+                <a class="nav-link mb-3 {{ request()->is('dashboard') ? 'active' : '' }}"
+                    href="{{ route('dashboard.admin') }}">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-home"></i>
                     </div>
@@ -22,7 +23,8 @@
                     </a>
                     <div class="collapse" id="collapseSCM" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested">
-                            <a class="nav-link mb-2" href="#"><i class="fas fa-clipboard-list me-2"></i> Data
+                            <a class="nav-link mb-2" href="{{ route('perencanaan') }}"><i
+                                    class="fas fa-clipboard-list me-2"></i> Data
                                 Perencanaan</a>
                             <a class="nav-link mb-2" href="#"><i class="fas fa-truck-loading me-2"></i> Data
                                 Pengadaan</a>
