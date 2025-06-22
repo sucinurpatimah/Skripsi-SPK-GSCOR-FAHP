@@ -26,24 +26,28 @@
                             <a class="nav-link mb-2" href="{{ route('perencanaan') }}"><i
                                     class="fas fa-clipboard-list me-2"></i> Data
                                 Perencanaan</a>
-                            <a class="nav-link mb-2" href="#"><i class="fas fa-truck-loading me-2"></i> Data
+                            <a class="nav-link mb-2" href="{{ route('pengadaan') }}"><i
+                                    class="fas fa-truck-loading me-2"></i> Data
                                 Pengadaan</a>
-                            <a class="nav-link mb-2" href="#"><i class="fas fa-industry me-2"></i> Data
+                            <a class="nav-link mb-2" href="{{ route('produksi') }}"><i class="fas fa-industry me-2"></i>
+                                Data
                                 Produksi</a>
-                            <a class="nav-link mb-2" href="#"><i class="fas fa-shipping-fast me-2"></i> Data
+                            <a class="nav-link mb-2" href="{{ route('distribusi') }}"><i
+                                    class="fas fa-shipping-fast me-2"></i> Data
                                 Distribusi</a>
-                            <a class="nav-link mb-2" href="#"><i class="fas fa-undo-alt me-2"></i> Data
+                            <a class="nav-link mb-2" href="{{ route('pengembalian') }}"><i
+                                    class="fas fa-undo-alt me-2"></i> Data
                                 Pengembalian</a>
                         </nav>
                     </div>
 
-                    <a class="nav-link mb-3" href="#">
+                    <a class="nav-link mb-3" href="{{ route('gscor') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Kelola Data GSCOR
                     </a>
-                    <a class="nav-link mb-3" href="#">
+                    <a class="nav-link mb-3" href="{{ route('kpi') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Kelola Data KPI
                     </a>
-                    <a class="nav-link mb-3" href="#">
+                    <a class="nav-link mb-3" href="{{ route('perhitungan') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-calculator"></i></div> Kelola Perhitungan
                     </a>
 

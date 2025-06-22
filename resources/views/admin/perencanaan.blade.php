@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Kelola Perencanaan')
-@section('page-title', 'Kelola Perencanaan')
+@section('title', 'Kelola Data Perencanaan')
+@section('page-title', 'Kelola Data Perencanaan')
 
 @section('content')
 
