@@ -17,9 +17,4 @@ class AdminController extends Controller
     {
         return view('admin/index');
     }
-
-    function manager()
-    {
-        return view('manager/index');
-    }
 }
