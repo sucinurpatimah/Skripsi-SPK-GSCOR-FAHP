@@ -10,4 +10,44 @@ class ManagerController extends Controller
     {
         return view('manager/index');
     }
+
+    function perencanaan()
+    {
+        return view('manager/perencanaan');
+    }
+
+    function pengadaan()
+    {
+        return view('manager/pengadaan');
+    }
+
+    function produksi()
+    {
+        return view('manager/produksi');
+    }
+
+    function distribusi()
+    {
+        return view('manager/distribusi');
+    }
+
+    function pengembalian()
+    {
+        return view('manager/pengembalian');
+    }
+
+    function gscor()
+    {
+        return view('manager/gscor');
+    }
+
+    function kpi()
+    {
+        return view('manager/kpi');
+    }
+
+    function laporan()
+    {
+        return view('manager/laporan');
+    }
 }

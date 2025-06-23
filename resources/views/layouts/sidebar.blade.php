@@ -4,17 +4,18 @@
             style="overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;">
             <div class="nav">
 
-                <!-- Dashboard -->
-                <a class="nav-link mb-3 {{ request()->is('dashboard') ? 'active' : '' }}"
-                    href="{{ route('dashboard.admin') }}">
-                    <div class="sb-nav-link-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    Dashboard
-                </a>
+
 
                 {{-- Jika admin --}}
                 @if (Auth::user()->role == 'admin')
+                    <!-- Dashboard -->
+                    <a class="nav-link mb-3 {{ request()->is('dashboard') ? 'active' : '' }}"
+                        href="{{ route('dashboard.admin') }}">
+                        <div class="sb-nav-link-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        Dashboard
+                    </a>
                     <a class="nav-link collapsed mb-2" href="#" data-bs-toggle="collapse"
                         data-bs-target="#collapseSCM" aria-expanded="false" aria-controls="collapseSCM">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -53,6 +54,14 @@
 
                     {{-- Jika manager --}}
                 @elseif(Auth::user()->role == 'manager')
+                    <!-- Dashboard -->
+                    <a class="nav-link mb-3 {{ request()->is('dashboard') ? 'active' : '' }}"
+                        href="{{ route('dashboard.manager') }}">
+                        <div class="sb-nav-link-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        Dashboard
+                    </a>
                     <a class="nav-link collapsed mb-2" href="#" data-bs-toggle="collapse"
                         data-bs-target="#collapseSCM" aria-expanded="false" aria-controls="collapseSCM">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -61,26 +70,31 @@
                     </a>
                     <div class="collapse" id="collapseSCM" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested">
-                            <a class="nav-link mb-2" href="#"><i class="fas fa-clipboard-list me-2"></i> Data
+                            <a class="nav-link mb-2" href="{{ route('manager.perencanaan') }}"><i
+                                    class="fas fa-clipboard-list me-2"></i> Data
                                 Perencanaan</a>
-                            <a class="nav-link mb-2" href="#"><i class="fas fa-truck-loading me-2"></i> Data
+                            <a class="nav-link mb-2" href="{{ route('manager.pengadaan') }}"><i
+                                    class="fas fa-truck-loading me-2"></i> Data
                                 Pengadaan</a>
-                            <a class="nav-link mb-2" href="#"><i class="fas fa-industry me-2"></i> Data
+                            <a class="nav-link mb-2" href="{{ route('manager.produksi') }}"><i
+                                    class="fas fa-industry me-2"></i> Data
                                 Produksi</a>
-                            <a class="nav-link mb-2" href="#"><i class="fas fa-shipping-fast me-2"></i> Data
+                            <a class="nav-link mb-2" href="{{ route('manager.distribusi') }}"><i
+                                    class="fas fa-shipping-fast me-2"></i> Data
                                 Distribusi</a>
-                            <a class="nav-link mb-2" href="#"><i class="fas fa-undo-alt me-2"></i> Data
+                            <a class="nav-link mb-2" href="{{ route('manager.pengembalian') }}"><i
+                                    class="fas fa-undo-alt me-2"></i> Data
                                 Pengembalian</a>
                         </nav>
                     </div>
 
-                    <a class="nav-link mb-3" href="#">
+                    <a class="nav-link mb-3" href="{{ route('manager.gscor') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Data GSCOR
                     </a>
-                    <a class="nav-link mb-3" href="#">
+                    <a class="nav-link mb-3" href="{{ route('manager.kpi') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Data KPI
                     </a>
-                    <a class="nav-link mb-3" href="#">
+                    <a class="nav-link mb-3" href="{{ route('manager.laporan') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div> Laporan
                     </a>
                 @endif

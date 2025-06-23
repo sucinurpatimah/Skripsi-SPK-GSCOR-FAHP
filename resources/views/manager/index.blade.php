@@ -5,42 +5,8 @@
 
 @section('content')
 
-    {{-- Konten Ringkasan / Komponen --}}
-    <div class="row mt-4 justify-content-between">
-        <div class="col-md-4 mb-4 d-flex">
-            <div class="card bg-primary text-white w-100">
-                <div class="card-body">Data SCM</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">Lihat Detail</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4 d-flex">
-            <div class="card bg-success text-white w-100">
-                <div class="card-body">Data Green SCOR</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">Lihat Detail</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4 d-flex">
-            <div class="card bg-warning text-white w-100">
-                <div class="card-body">Laporan</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">Lihat Detail</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     {{-- Grafik atau Statistik Bisa Ditambahkan Di Sini --}}
-    <div class="card mb-4">
+    <div class="card mt-4 mb-4">
         <div class="card-header"><i class="fas fa-chart-area me-1"></i>Nilai Akhir SCM</div>
         <div class="card-body">
             <canvas id="myAreaChart" width="100%" height="30"></canvas>
