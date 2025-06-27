@@ -4,110 +4,143 @@
             style="overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;">
             <div class="nav">
 
-
-
                 {{-- Jika admin --}}
                 @if (Auth::user()->role == 'admin')
                     <!-- Dashboard -->
-                    <a class="nav-link mb-3 {{ request()->is('dashboard') ? 'active' : '' }}"
+                    <a class="nav-link mb-3 {{ request()->routeIs('dashboard.admin') ? 'active' : '' }}"
                         href="{{ route('dashboard.admin') }}">
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-home"></i>
                         </div>
                         Dashboard
                     </a>
-                    <a class="nav-link collapsed mb-2" href="#" data-bs-toggle="collapse"
-                        data-bs-target="#collapseSCM" aria-expanded="false" aria-controls="collapseSCM">
+
+                    <!-- Kelola Data SCM -->
+                    <a class="nav-link collapsed mb-2 {{ request()->is('perencanaan*') || request()->is('pengadaan*') || request()->is('produksi*') || request()->is('distribusi*') || request()->is('pengembalian*') ? '' : '' }}"
+                        href="#" data-bs-toggle="collapse" data-bs-target="#collapseSCM"
+                        aria-expanded="{{ request()->is('perencanaan*') || request()->is('pengadaan*') || request()->is('produksi*') || request()->is('distribusi*') || request()->is('pengembalian*') ? 'true' : 'false' }}"
+                        aria-controls="collapseSCM">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                         Kelola Data SCM
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseSCM" data-bs-parent="#sidenavAccordion">
+                    <div class="collapse {{ request()->is('perencanaan*') || request()->is('pengadaan*') || request()->is('produksi*') || request()->is('distribusi*') || request()->is('pengembalian*') ? 'show' : '' }}"
+                        id="collapseSCM" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested">
-                            <a class="nav-link mb-2" href="{{ route('perencanaan') }}"><i
-                                    class="fas fa-clipboard-list me-2"></i> Data
-                                Perencanaan</a>
-                            <a class="nav-link mb-2" href="{{ route('pengadaan') }}"><i
-                                    class="fas fa-truck-loading me-2"></i> Data
-                                Pengadaan</a>
-                            <a class="nav-link mb-2" href="{{ route('produksi') }}"><i class="fas fa-industry me-2"></i>
-                                Data
-                                Produksi</a>
-                            <a class="nav-link mb-2" href="{{ route('distribusi') }}"><i
-                                    class="fas fa-shipping-fast me-2"></i> Data
-                                Distribusi</a>
-                            <a class="nav-link mb-2" href="{{ route('pengembalian') }}"><i
-                                    class="fas fa-undo-alt me-2"></i> Data
-                                Pengembalian</a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('perencanaan') ? 'active' : '' }}"
+                                href="{{ route('perencanaan') }}">
+                                <i class="fas fa-clipboard-list me-2"></i> Data Perencanaan
+                            </a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('pengadaan') ? 'active' : '' }}"
+                                href="{{ route('pengadaan') }}">
+                                <i class="fas fa-truck-loading me-2"></i> Data Pengadaan
+                            </a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('produksi') ? 'active' : '' }}"
+                                href="{{ route('produksi') }}">
+                                <i class="fas fa-industry me-2"></i> Data Produksi
+                            </a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('distribusi') ? 'active' : '' }}"
+                                href="{{ route('distribusi') }}">
+                                <i class="fas fa-shipping-fast me-2"></i> Data Distribusi
+                            </a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('pengembalian') ? 'active' : '' }}"
+                                href="{{ route('pengembalian') }}">
+                                <i class="fas fa-undo-alt me-2"></i> Data Pengembalian
+                            </a>
                         </nav>
                     </div>
 
-                    <a class="nav-link mb-3" href="{{ route('scor') }}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Kelola Data SCOR
+                    <a class="nav-link mb-3 {{ request()->routeIs('scor') ? 'active' : '' }}"
+                        href="{{ route('scor') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Kelola Data SCOR
                     </a>
-                    <a class="nav-link mb-3" href="{{ route('gscor') }}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Kelola Data GSCOR
+                    <a class="nav-link mb-3 {{ request()->routeIs('gscor') ? 'active' : '' }}"
+                        href="{{ route('gscor') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Kelola Data GSCOR
                     </a>
-                    <a class="nav-link mb-3" href="{{ route('kpi') }}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Kelola Data KPI
+                    <a class="nav-link mb-3 {{ request()->routeIs('kpi') ? 'active' : '' }}"
+                        href="{{ route('kpi') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Kelola Data KPI
                     </a>
-                    <a class="nav-link mb-3" href="{{ route('perhitungan') }}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-calculator"></i></div> Kelola Perhitungan
+                    <a class="nav-link mb-3 {{ request()->routeIs('perhitungan') ? 'active' : '' }}"
+                        href="{{ route('perhitungan') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-calculator"></i></div>
+                        Kelola Perhitungan
                     </a>
 
                     {{-- Jika manager --}}
                 @elseif(Auth::user()->role == 'manager')
                     <!-- Dashboard -->
-                    <a class="nav-link mb-3 {{ request()->is('dashboard') ? 'active' : '' }}"
+                    <a class="nav-link mb-3 {{ request()->routeIs('dashboard.manager') ? 'active' : '' }}"
                         href="{{ route('dashboard.manager') }}">
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-home"></i>
                         </div>
                         Dashboard
                     </a>
-                    <a class="nav-link collapsed mb-2" href="#" data-bs-toggle="collapse"
-                        data-bs-target="#collapseSCM" aria-expanded="false" aria-controls="collapseSCM">
+
+                    <!-- Data SCM -->
+                    <a class="nav-link collapsed mb-2 {{ request()->is('manager/perencanaan*') || request()->is('manager/pengadaan*') || request()->is('manager/produksi*') || request()->is('manager/distribusi*') || request()->is('manager/pengembalian*') ? '' : '' }}"
+                        href="#" data-bs-toggle="collapse" data-bs-target="#collapseSCM"
+                        aria-expanded="{{ request()->is('manager/perencanaan*') || request()->is('manager/pengadaan*') || request()->is('manager/produksi*') || request()->is('manager/distribusi*') || request()->is('manager/pengembalian*') ? 'true' : 'false' }}"
+                        aria-controls="collapseSCM">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                         Data SCM
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseSCM" data-bs-parent="#sidenavAccordion">
+                    <div class="collapse {{ request()->is('manager/perencanaan*') || request()->is('manager/pengadaan*') || request()->is('manager/produksi*') || request()->is('manager/distribusi*') || request()->is('manager/pengembalian*') ? 'show' : '' }}"
+                        id="collapseSCM" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested">
-                            <a class="nav-link mb-2" href="{{ route('manager.perencanaan') }}"><i
-                                    class="fas fa-clipboard-list me-2"></i> Data
-                                Perencanaan</a>
-                            <a class="nav-link mb-2" href="{{ route('manager.pengadaan') }}"><i
-                                    class="fas fa-truck-loading me-2"></i> Data
-                                Pengadaan</a>
-                            <a class="nav-link mb-2" href="{{ route('manager.produksi') }}"><i
-                                    class="fas fa-industry me-2"></i> Data
-                                Produksi</a>
-                            <a class="nav-link mb-2" href="{{ route('manager.distribusi') }}"><i
-                                    class="fas fa-shipping-fast me-2"></i> Data
-                                Distribusi</a>
-                            <a class="nav-link mb-2" href="{{ route('manager.pengembalian') }}"><i
-                                    class="fas fa-undo-alt me-2"></i> Data
-                                Pengembalian</a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('manager.perencanaan') ? 'active' : '' }}"
+                                href="{{ route('manager.perencanaan') }}">
+                                <i class="fas fa-clipboard-list me-2"></i> Data Perencanaan
+                            </a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('manager.pengadaan') ? 'active' : '' }}"
+                                href="{{ route('manager.pengadaan') }}">
+                                <i class="fas fa-truck-loading me-2"></i> Data Pengadaan
+                            </a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('manager.produksi') ? 'active' : '' }}"
+                                href="{{ route('manager.produksi') }}">
+                                <i class="fas fa-industry me-2"></i> Data Produksi
+                            </a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('manager.distribusi') ? 'active' : '' }}"
+                                href="{{ route('manager.distribusi') }}">
+                                <i class="fas fa-shipping-fast me-2"></i> Data Distribusi
+                            </a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('manager.pengembalian') ? 'active' : '' }}"
+                                href="{{ route('manager.pengembalian') }}">
+                                <i class="fas fa-undo-alt me-2"></i> Data Pengembalian
+                            </a>
                         </nav>
                     </div>
 
-                    <a class="nav-link mb-3" href="{{ route('manager.scor') }}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Data SCOR
+                    <a class="nav-link mb-3 {{ request()->routeIs('manager.scor') ? 'active' : '' }}"
+                        href="{{ route('manager.scor') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Data SCOR
                     </a>
-                    <a class="nav-link mb-3" href="{{ route('manager.gscor') }}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Data GSCOR
+                    <a class="nav-link mb-3 {{ request()->routeIs('manager.gscor') ? 'active' : '' }}"
+                        href="{{ route('manager.gscor') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Data GSCOR
                     </a>
-                    <a class="nav-link mb-3" href="{{ route('manager.kpi') }}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Data KPI
+                    <a class="nav-link mb-3 {{ request()->routeIs('manager.kpi') ? 'active' : '' }}"
+                        href="{{ route('manager.kpi') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Data KPI
                     </a>
-                    <a class="nav-link mb-3" href="{{ route('manager.laporan') }}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div> Laporan
+                    <a class="nav-link mb-3 {{ request()->routeIs('manager.laporan') ? 'active' : '' }}"
+                        href="{{ route('manager.laporan') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+                        Laporan
                     </a>
                 @endif
 
             </div>
         </div>
-
 
         <!-- Footer Sidebar -->
         <div class="sb-sidenav-footer mt-auto">
