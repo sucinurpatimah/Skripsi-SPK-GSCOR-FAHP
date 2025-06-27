@@ -5,6 +5,7 @@ use App\Http\Controllers\GSCORController;
 use App\Http\Controllers\KPIController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\SCMController;
+use App\Http\Controllers\SCORController;
 use App\Http\Controllers\SesiController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('Kelola-Data-Produksi', [SCMController::class, 'produksi'])->name('produksi');
     Route::get('Kelola-Data-Distribusi', [SCMController::class, 'distribusi'])->name('distribusi');
     Route::get('Kelola-Data-Pengembalian', [SCMController::class, 'pengembalian'])->name('pengembalian');
+    Route::get('Kelola-Data-SCOR', [SCORController::class, 'index'])->name('scor');
     Route::get('Kelola-Data-GreenSCOR', [GSCORController::class, 'index'])->name('gscor');
     Route::get('Kelola-Data-KPI', [KPIController::class, 'index'])->name('kpi');
     Route::get('Kelola-Perhitungan', [KPIController::class, 'perhitungan'])->name('perhitungan');
@@ -37,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('Data-Produksi', [ManagerController::class, 'produksi'])->name('manager.produksi');
     Route::get('Data-Distribusi', [ManagerController::class, 'distribusi'])->name('manager.distribusi');
     Route::get('Data-Pengembalian', [ManagerController::class, 'pengembalian'])->name('manager.pengembalian');
+    Route::get('Data-SCOR', [SCORController::class, 'scor'])->name('manager.scor');
     Route::get('Data-GreenSCOR', [ManagerController::class, 'gscor'])->name('manager.gscor');
     Route::get('Data-KPI', [ManagerController::class, 'kpi'])->name('manager.kpi');
     Route::get('Laporan', [ManagerController::class, 'laporan'])->name('manager.laporan');

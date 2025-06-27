@@ -36,6 +36,11 @@ class ManagerController extends Controller
         return view('manager/pengembalian');
     }
 
+    function scor()
+    {
+        return view('manager/scor');
+    }
+
     function gscor()
     {
         return view('manager/gscor');

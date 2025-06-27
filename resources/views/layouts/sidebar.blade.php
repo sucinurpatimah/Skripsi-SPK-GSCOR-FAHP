@@ -42,6 +42,9 @@
                         </nav>
                     </div>
 
+                    <a class="nav-link mb-3" href="{{ route('scor') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Kelola Data SCOR
+                    </a>
                     <a class="nav-link mb-3" href="{{ route('gscor') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Kelola Data GSCOR
                     </a>
@@ -88,6 +91,9 @@
                         </nav>
                     </div>
 
+                    <a class="nav-link mb-3" href="{{ route('manager.scor') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Data SCOR
+                    </a>
                     <a class="nav-link mb-3" href="{{ route('manager.gscor') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Data GSCOR
                     </a>
