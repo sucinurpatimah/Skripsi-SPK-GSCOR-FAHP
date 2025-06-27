@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('Data-Produksi', [ManagerController::class, 'produksi'])->name('manager.produksi');
     Route::get('Data-Distribusi', [ManagerController::class, 'distribusi'])->name('manager.distribusi');
     Route::get('Data-Pengembalian', [ManagerController::class, 'pengembalian'])->name('manager.pengembalian');
-    Route::get('Data-SCOR', [SCORController::class, 'scor'])->name('manager.scor');
+    Route::get('Data-SCOR', [ManagerController::class, 'scor'])->name('manager.scor');
     Route::get('Data-GreenSCOR', [ManagerController::class, 'gscor'])->name('manager.gscor');
     Route::get('Data-KPI', [ManagerController::class, 'kpi'])->name('manager.kpi');
     Route::get('Laporan', [ManagerController::class, 'laporan'])->name('manager.laporan');

@@ -31,7 +31,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4 py-4">
-                    <h1 class="mt-4">@yield('page-title', 'Dashboard')</h1>
+                    <h1>@yield('page-title', 'Dashboard')</h1>
                     {{-- Breadcrumb atau lainnya bisa di sini --}}
                     @yield('content')
                 </div>

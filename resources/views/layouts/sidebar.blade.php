@@ -16,7 +16,7 @@
                     </a>
 
                     <!-- Kelola Data SCM -->
-                    <a class="nav-link collapsed mb-2 {{ request()->is('perencanaan*') || request()->is('pengadaan*') || request()->is('produksi*') || request()->is('distribusi*') || request()->is('pengembalian*') ? '' : '' }}"
+                    <a class="nav-link collapsed mb-3 {{ request()->is('perencanaan*') || request()->is('pengadaan*') || request()->is('produksi*') || request()->is('distribusi*') || request()->is('pengembalian*') ? '' : '' }}"
                         href="#" data-bs-toggle="collapse" data-bs-target="#collapseSCM"
                         aria-expanded="{{ request()->is('perencanaan*') || request()->is('pengadaan*') || request()->is('produksi*') || request()->is('distribusi*') || request()->is('pengembalian*') ? 'true' : 'false' }}"
                         aria-controls="collapseSCM">
@@ -83,7 +83,7 @@
                     </a>
 
                     <!-- Data SCM -->
-                    <a class="nav-link collapsed mb-2 {{ request()->is('manager/perencanaan*') || request()->is('manager/pengadaan*') || request()->is('manager/produksi*') || request()->is('manager/distribusi*') || request()->is('manager/pengembalian*') ? '' : '' }}"
+                    <a class="nav-link collapsed mb-3 {{ request()->is('manager/perencanaan*') || request()->is('manager/pengadaan*') || request()->is('manager/produksi*') || request()->is('manager/distribusi*') || request()->is('manager/pengembalian*') ? '' : '' }}"
                         href="#" data-bs-toggle="collapse" data-bs-target="#collapseSCM"
                         aria-expanded="{{ request()->is('manager/perencanaan*') || request()->is('manager/pengadaan*') || request()->is('manager/produksi*') || request()->is('manager/distribusi*') || request()->is('manager/pengembalian*') ? 'true' : 'false' }}"
                         aria-controls="collapseSCM">
