@@ -6,9 +6,9 @@
 @section('content')
 
     <div class="d-flex justify-content-end mb-3">
-        <a href="#" class="btn btn-dark">
+        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalTambah">
             <i class="fas fa-plus"></i> Tambah Data
-        </a>
+        </button>
     </div>
 
     <div class="card mt-3">
@@ -48,6 +48,63 @@
                     @endforelse --}}
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tambah Data -->
+    <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow">
+                <form action="" method="">
+                    @csrf
+                    <div class="modal-header bg-dark text-white">
+                        <h5 class="modal-title" id="modalTambahLabel">
+                            <i></i> Tambah Data Green SCOR
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label for="variabel" class="form-label">Variabel</label>
+                                <select name="variabel" id="variabel" class="form-select" required>
+                                    <option value="" disabled selected>Pilih Variabel</option>
+                                    <option value="plan">Plan (Perencanaan)</option>
+                                    <option value="source">Source (Pengadaan)</option>
+                                    <option value="make">Make (Produksi)</option>
+                                    <option value="distribution">Distribution (Pengiriman)</option>
+                                    <option value="return">Return (Pengembalian)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="atribut" class="form-label">Atribut</label>
+                                <select name="atribut" id="atribut" class="form-select" required>
+                                    <option value="" disabled selected>Pilih Atribut</option>
+                                    <option value="reliability">Reliability (Keandalan)</option>
+                                    <option value="responsiveness">Responsiveness (Respon Cepat)</option>
+                                    <option value="agility">Agility (Kelincahan)</option>
+                                    <option value="cost">Cost (Biaya)</option>
+                                    <option value="asset_management">Asset Management (Pengelolaan Aset)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="indikator" class="form-label">Indikator</label>
+                                <textarea name="indikator" id="indikator" rows="3" class="form-control"
+                                    placeholder="Contoh: % Supplier with EMS/ISO 14001" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Batal
+                        </button>
+                        <button type="submit" class="btn btn-dark">
+                            <i class="fas fa-save"></i> Simpan Data
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

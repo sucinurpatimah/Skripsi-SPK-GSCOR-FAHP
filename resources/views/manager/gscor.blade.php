@@ -12,6 +12,7 @@
                     <thead class="table-light">
                         <tr>
                             <th class="text-center">Variabel</th>
+                            <th class="text-center">Atribut</th>
                             <th class="text-center">Indikator</th>
                         </tr>
                     </thead>

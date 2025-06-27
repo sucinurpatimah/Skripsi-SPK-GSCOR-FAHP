@@ -12,12 +12,14 @@
                     <thead class="table-light">
                         <tr>
                             <th class="text-center">Variabel</th>
+                            <th class="text-center">Atribut</th>
                             <th class="text-center">Indikator</th>
                         </tr>
                     </thead>
                     <tbody>
                         {{-- @forelse ($dataPerencanaan as $item) --}}
                         <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                         </tr>
