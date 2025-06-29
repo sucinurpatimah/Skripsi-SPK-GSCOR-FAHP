@@ -42,9 +42,15 @@
                                         data-bs-target="#modalEdit{{ $item->id }}">
                                         <i class="fas fa-edit"></i> Edit
                                     </button>
-                                    <a href="#" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash-alt"></i> Hapus
-                                    </a>
+                                    <form action="{{ route('perencanaan.delete', $item->id) }}" method="POST"
+                                        class="d-inline"
+                                        onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash-alt"></i> Hapus
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty

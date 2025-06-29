@@ -52,6 +52,14 @@ class SCMController extends Controller
         return redirect()->route('perencanaan')->with('success', 'Data berhasil diperbarui.');
     }
 
+    public function deletePerencanaan($id)
+    {
+        $data = Perencanaan::findOrFail($id);
+        $data->delete();
+
+        return redirect()->route('perencanaan')->with('success', 'Data berhasil dihapus.');
+    }
+
     function pengadaan()
     {
         return view('admin/pengadaan');

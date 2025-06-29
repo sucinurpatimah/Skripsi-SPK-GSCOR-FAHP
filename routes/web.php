@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('Kelola-Data-Perencanaan', [SCMController::class, 'perencanaan'])->name('perencanaan');
     Route::post('Tambah-Data-Perencanaan', [SCMController::class, 'storePerencanaan'])->name('perencanaan.store');
     Route::post('Edit-Data-Perencanaan/{id}/update', [SCMController::class, 'updatePerencanaan'])->name('perencanaan.update');
+    Route::delete('Delete-Data-Perencanaan/{id}', [SCMController::class, 'deletePerencanaan'])->name('perencanaan.delete');
     Route::get('Kelola-Data-Pengadaan', [SCMController::class, 'pengadaan'])->name('pengadaan');
     Route::get('Kelola-Data-Produksi', [SCMController::class, 'produksi'])->name('produksi');
     Route::get('Kelola-Data-Distribusi', [SCMController::class, 'distribusi'])->name('distribusi');
