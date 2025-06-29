@@ -5,6 +5,12 @@
 
 @section('content')
 
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="d-flex justify-content-end mb-3">
         <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalTambah">
             <i class="fas fa-plus"></i> Tambah Data
@@ -25,27 +31,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @forelse ($dataPerencanaan as $item) --}}
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-center">
-                                {{-- Button Aksi --}}
-                                <a href="#" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <a href="#" class="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash-alt"></i> Hapus
-                                </a>
-                            </td>
-                        </tr>
-                        {{-- @empty
+                        @forelse ($dataPerencanaan as $item)
+                            <tr>
+                                <td class="text-center">{{ $item->tahun }}</td>
+                                <td class="text-center">{{ $item->bulan }}</td>
+                                <td class="text-center">{{ $item->permintaan }}</td>
+                                <td class="text-center">{{ $item->jumlah_pekerja }}</td>
+                                <td class="text-center">
+                                    <a href="#" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="#" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Hapus
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
                             <tr>
                                 <td colspan="5" class="text-center text-muted">Belum ada data perencanaan.</td>
                             </tr>
-                        @endforelse --}}
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -56,7 +61,7 @@
     <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0 shadow">
-                <form action="" method="">
+                <form action="{{ route('perencanaan.store') }}" method="POST">
                     @csrf
                     <div class="modal-header bg-dark text-white">
                         <h5 class="modal-title" id="modalTambahLabel">

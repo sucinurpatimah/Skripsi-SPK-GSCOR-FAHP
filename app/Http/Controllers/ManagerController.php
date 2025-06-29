@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Perencanaan;
 use Illuminate\Http\Request;
 
 class ManagerController extends Controller
@@ -13,7 +14,8 @@ class ManagerController extends Controller
 
     function perencanaan()
     {
-        return view('manager/perencanaan');
+        $dataPerencanaan = Perencanaan::all();
+        return view('manager/perencanaan', compact('dataPerencanaan'));
     }
 
     function pengadaan()
