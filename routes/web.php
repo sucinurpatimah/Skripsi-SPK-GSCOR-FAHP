@@ -23,7 +23,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index']);
     Route::get('/admin/admin', [AdminController::class, 'admin'])->name('dashboard.admin');
     Route::get('Kelola-Data-Perencanaan', [SCMController::class, 'perencanaan'])->name('perencanaan');
-    Route::post('Kelola-Data-Perencanaan', [SCMController::class, 'storePerencanaan'])->name('perencanaan.store');
+    Route::post('Tambah-Data-Perencanaan', [SCMController::class, 'storePerencanaan'])->name('perencanaan.store');
+    Route::post('Edit-Data-Perencanaan/{id}/update', [SCMController::class, 'updatePerencanaan'])->name('perencanaan.update');
     Route::get('Kelola-Data-Pengadaan', [SCMController::class, 'pengadaan'])->name('pengadaan');
     Route::get('Kelola-Data-Produksi', [SCMController::class, 'produksi'])->name('produksi');
     Route::get('Kelola-Data-Distribusi', [SCMController::class, 'distribusi'])->name('distribusi');

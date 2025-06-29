@@ -32,6 +32,26 @@ class SCMController extends Controller
         return redirect()->route('perencanaan')->with('success', 'Data berhasil ditambahkan.');
     }
 
+    public function updatePerencanaan(Request $request, $id)
+    {
+        $request->validate([
+            'tahun' => 'required|integer|min:2000|max:2100',
+            'bulan' => 'required|string',
+            'permintaan' => 'required|numeric|min:0',
+            'jumlah_pekerja' => 'required|integer|min:0',
+        ]);
+
+        $data = Perencanaan::findOrFail($id);
+        $data->update([
+            'tahun' => $request->tahun,
+            'bulan' => $request->bulan,
+            'permintaan' => $request->permintaan,
+            'jumlah_pekerja' => $request->jumlah_pekerja,
+        ]);
+
+        return redirect()->route('perencanaan')->with('success', 'Data berhasil diperbarui.');
+    }
+
     function pengadaan()
     {
         return view('admin/pengadaan');

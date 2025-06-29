@@ -22,7 +22,7 @@
                             <tr>
                                 <td class="text-center">{{ $item->tahun }}</td>
                                 <td class="text-center">{{ $item->bulan }}</td>
-                                <td class="text-center">{{ $item->permintaan }}</td>
+                                <td class="text-center">{{ number_format($item->permintaan, 0, ',', '.') }}</td>
                                 <td class="text-center">{{ $item->jumlah_pekerja }}</td>
                             </tr>
                         @empty
