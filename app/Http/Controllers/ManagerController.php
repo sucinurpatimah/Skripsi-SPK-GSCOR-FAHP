@@ -7,6 +7,7 @@ use App\Models\Pengadaan;
 use App\Models\Pengembalian;
 use App\Models\Perencanaan;
 use App\Models\Produksi;
+use App\Models\SCOR;
 use Illuminate\Http\Request;
 
 class ManagerController extends Controller
@@ -48,7 +49,8 @@ class ManagerController extends Controller
 
     function scor()
     {
-        return view('manager/scor');
+        $dataScor = SCOR::all();
+        return view('manager/scor', compact('dataScor'));
     }
 
     function gscor()
