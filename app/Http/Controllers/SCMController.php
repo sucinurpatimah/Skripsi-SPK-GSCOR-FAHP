@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengadaan;
 use App\Models\Perencanaan;
+use App\Models\Produksi;
 use Illuminate\Http\Request;
 
 class SCMController extends Controller
@@ -112,11 +113,33 @@ class SCMController extends Controller
         return redirect()->route('pengadaan')->with('success', 'Data berhasil dihapus.');
     }
 
+    // Kelola Data Produksi
     function produksi()
     {
-        return view('admin/produksi');
+        $dataProduksi = Produksi::all();
+        return view('admin/produksi', compact('dataProduksi'));
     }
 
+    public function storeProduksi(Request $request)
+    {
+        $request->validate([
+            'listrik' => 'required|numeric|min:0',
+            'air' => 'nullable|numeric|min:0',
+            'hasil_produksi' => 'nullable|numeric|min:0',
+            'sampah' => 'nullable|numeric|min:0',
+        ]);
+
+        Produksi::create([
+            'listrik' => $request->listrik,
+            'air' => $request->air,
+            'hasil_produksi' => $request->hasil_produksi,
+            'sampah' => $request->sampah,
+        ]);
+
+        return redirect()->route('produksi')->with('success', 'Data berhasil ditambahkan.');
+    }
+
+    //Kelola Data Distribusi
     function distribusi()
     {
         return view('admin/distribusi');

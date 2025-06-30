@@ -37,11 +37,24 @@ Route::middleware(['auth'])->group(function () {
 
     //Kelola Data Produksi
     Route::get('Kelola-Data-Produksi', [SCMController::class, 'produksi'])->name('produksi');
+    Route::post('Tambah-Data-Produksi', [SCMController::class, 'storeProduksi'])->name('produksi.store');
+
+    //Kelola Data Distribusi
     Route::get('Kelola-Data-Distribusi', [SCMController::class, 'distribusi'])->name('distribusi');
+
+    //Kelola Data Pengembalian
     Route::get('Kelola-Data-Pengembalian', [SCMController::class, 'pengembalian'])->name('pengembalian');
+
+    //Kelola Data SCOR
     Route::get('Kelola-Data-SCOR', [SCORController::class, 'index'])->name('scor');
+
+    //Kelola Data GSCOR
     Route::get('Kelola-Data-GreenSCOR', [GSCORController::class, 'index'])->name('gscor');
+
+    //Kelola Data KPI
     Route::get('Kelola-Data-KPI', [KPIController::class, 'index'])->name('kpi');
+
+    //Kelola Perhitungan
     Route::get('Kelola-Perhitungan', [KPIController::class, 'perhitungan'])->name('perhitungan');
 
     //Manager
