@@ -33,12 +33,18 @@
                                 <td class="text-center">{{ number_format($item->sampah, 0, ',', '.') }} Kg</td>
                                 <td class="text-center">
                                     {{-- Button Aksi --}}
-                                    <a href="#" class="btn btn-sm btn-primary">
+                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#modalEdit{{ $item->id }}">
                                         <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                    <a href="#" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash-alt"></i> Hapus
-                                    </a>
+                                    </button>
+                                    <form action="{{ route('produksi.delete', $item->id) }}" method="POST" class="d-inline"
+                                        onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash-alt"></i> Hapus
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty
@@ -101,6 +107,60 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal Edit Data --}}
+    @foreach ($dataProduksi as $item)
+        <div class="modal fade" id="modalEdit{{ $item->id }}" tabindex="-1"
+            aria-labelledby="modalEditLabel{{ $item->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0 shadow">
+                    <form action="{{ route('produksi.update', $item->id) }}" method="POST">
+                        @csrf
+                        <div class="modal-header bg-dark text-white">
+                            <h5 class="modal-title" id="modalEditLabel{{ $item->id }}">
+                                <i></i> Edit Data Produksi
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Tutup"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="listrik{{ $item->id }}" class="form-label">Listrik</label>
+                                    <input type="number" name="listrik" id="listrik{{ $item->id }}"
+                                        class="form-control" value="{{ $item->listrik }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="air{{ $item->id }}" class="form-label">Air</label>
+                                    <input type="number" name="air" id="air{{ $item->id }}"
+                                        class="form-control" value="{{ $item->air }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="hasil_produksi{{ $item->id }}" class="form-label">Hasil
+                                        Produksi</label>
+                                    <input type="number" name="hasil_produksi" id="hasil_produksi{{ $item->id }}"
+                                        class="form-control" value="{{ $item->hasil_produksi }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="sampah{{ $item->id }}" class="form-label">Sampah</label>
+                                    <input type="number" name="sampah" id="sampah{{ $item->id }}"
+                                        class="form-control" value="{{ $item->sampah }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer bg-light">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                <i class="fas fa-times"></i> Batal
+                            </button>
+                            <button type="submit" class="btn btn-dark">
+                                <i class="fas fa-save"></i> Simpan Perubahan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
 
 @endsection

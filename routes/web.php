@@ -38,6 +38,8 @@ Route::middleware(['auth'])->group(function () {
     //Kelola Data Produksi
     Route::get('Kelola-Data-Produksi', [SCMController::class, 'produksi'])->name('produksi');
     Route::post('Tambah-Data-Produksi', [SCMController::class, 'storeProduksi'])->name('produksi.store');
+    Route::post('Edit-Data-Produksi/{id}/update', [SCMController::class, 'updateProduksi'])->name('produksi.update');
+    Route::delete('Delete-Data-Produksi/{id}', [SCMController::class, 'deleteProduksi'])->name('produksi.delete');
 
     //Kelola Data Distribusi
     Route::get('Kelola-Data-Distribusi', [SCMController::class, 'distribusi'])->name('distribusi');

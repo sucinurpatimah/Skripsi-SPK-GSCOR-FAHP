@@ -139,6 +139,34 @@ class SCMController extends Controller
         return redirect()->route('produksi')->with('success', 'Data berhasil ditambahkan.');
     }
 
+    public function updateProduksi(Request $request, $id)
+    {
+        $request->validate([
+            'listrik' => 'required|numeric|min:0',
+            'air' => 'nullable|numeric|min:0',
+            'hasil_produksi' => 'nullable|numeric|min:0',
+            'sampah' => 'nullable|numeric|min:0',
+        ]);
+
+        $data = Produksi::findOrFail($id);
+        $data->update([
+            'listrik' => $request->listrik,
+            'air' => $request->air,
+            'hasil_produksi' => $request->hasil_produksi,
+            'sampah' => $request->sampah,
+        ]);
+
+        return redirect()->route('produksi')->with('success', 'Data berhasil diperbarui.');
+    }
+
+    public function deleteProduksi($id)
+    {
+        $data = Produksi::findOrFail($id);
+        $data->delete();
+
+        return redirect()->route('produksi')->with('success', 'Data berhasil dihapus.');
+    }
+
     //Kelola Data Distribusi
     function distribusi()
     {
