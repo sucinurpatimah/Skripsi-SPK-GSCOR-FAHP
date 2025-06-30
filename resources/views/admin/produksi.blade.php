@@ -17,10 +17,10 @@
                 <table class="table table-bordered mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th class="text-center">Listrik</th>
-                            <th class="text-center">Air</th>
+                            <th class="text-center">Penggunaan Listrik</th>
+                            <th class="text-center">Penggunaan Air</th>
                             <th class="text-center">Hasil Produksi</th>
-                            <th class="text-center">Sampah</th>
+                            <th class="text-center">Sampah Produksi</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>

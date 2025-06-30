@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Distribusi;
 use App\Models\Pengadaan;
 use App\Models\Perencanaan;
 use App\Models\Produksi;
@@ -34,7 +35,8 @@ class ManagerController extends Controller
 
     function distribusi()
     {
-        return view('manager/distribusi');
+        $dataDistribusi = Distribusi::all();
+        return view('manager/distribusi', compact('dataDistribusi'));
     }
 
     function pengembalian()

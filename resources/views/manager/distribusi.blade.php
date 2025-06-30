@@ -13,22 +13,21 @@
                         <tr>
                             <th class="text-center">Nama Agen</th>
                             <th class="text-center">Alamat</th>
-                            <th class="text-center">Produk Dikirim (Kg)</th>
+                            <th class="text-center">Produk Dikirim</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @forelse ($dataPerencanaan as $item) --}}
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">Belum ada data distribusi.</td>
-                            {{-- <td></td>
-                        <td></td>
-                        <td></td> --}}
-                        </tr>
-                        {{-- @empty
-                <tr>
-                    <td colspan="5" class="text-center text-muted">Belum ada data perencanaan.</td>
-                </tr>
-            @endforelse --}}
+                        @forelse ($dataDistribusi as $item)
+                            <tr>
+                                <td class="text-center">{{ $item->nama_agen }}</td>
+                                <td class="text-center">{{ $item->alamat }}</td>
+                                <td class="text-center">{{ number_format($item->produk_dikirim, 0, ',', '.') }} Kg</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">Belum ada data distribusi.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
