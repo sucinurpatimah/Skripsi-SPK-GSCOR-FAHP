@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Distribusi;
 use App\Models\Pengadaan;
+use App\Models\Pengembalian;
 use App\Models\Perencanaan;
 use App\Models\Produksi;
 use Illuminate\Http\Request;
@@ -41,7 +42,8 @@ class ManagerController extends Controller
 
     function pengembalian()
     {
-        return view('manager/pengembalian');
+        $dataPengembalian = Pengembalian::all();
+        return view('manager/pengembalian', compact('dataPengembalian'));
     }
 
     function scor()
