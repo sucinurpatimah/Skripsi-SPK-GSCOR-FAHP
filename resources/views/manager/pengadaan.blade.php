@@ -17,18 +17,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @forelse ($dataPerencanaan as $item) --}}
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">Belum ada data pengadaan.</td>
-                            {{-- <td></td>
-                            <td></td>
-                            <td></td> --}}
-                        </tr>
-                        {{-- @empty
-                    <tr>
-                        <td colspan="5" class="text-center text-muted">Belum ada data perencanaan.</td>
-                    </tr>
-                @endforelse --}}
+                        @forelse ($dataPengadaan as $item)
+                            <tr>
+                                <td class="text-center">{{ number_format($item->bahan_baku, 0, ',', '.') }} Kg</td>
+                                <td class="text-center">{{ $item->pewarna ?? '-' }} Kg</td>
+                                <td class="text-center">{{ $item->supplier_iso ?? '-' }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">Belum ada data pengadaan.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

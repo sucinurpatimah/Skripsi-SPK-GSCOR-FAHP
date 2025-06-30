@@ -24,26 +24,33 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @forelse ($dataPerencanaan as $item) --}}
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-center">
-                                {{-- Button Aksi --}}
-                                <a href="#" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <a href="#" class="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash-alt"></i> Hapus
-                                </a>
-                            </td>
-                        </tr>
-                        {{-- @empty
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">Belum ada data perencanaan.</td>
-                        </tr>
-                    @endforelse --}}
+                        @forelse ($dataPengadaan as $item)
+                            <tr>
+                                <td class="text-center">{{ number_format($item->bahan_baku, 0, ',', '.') }} Kg</td>
+                                <td class="text-center">{{ $item->pewarna ?? '-' }} Kg</td>
+                                <td class="text-center">{{ $item->supplier_iso ?? '-' }}</td>
+                                <td class="text-center">
+                                    {{-- Button Aksi --}}
+                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#modalEdit{{ $item->id }}">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <form action="{{ route('pengadaan.delete', $item->id) }}" method="POST"
+                                        class="d-inline"
+                                        onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash-alt"></i> Hapus
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">Belum ada data pengadaan.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -54,7 +61,7 @@
     <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0 shadow">
-                <form action="" method="">
+                <form action="{{ route('pengadaan.store') }}" method="POST">
                     @csrf
                     <div class="modal-header bg-dark text-white">
                         <h5 class="modal-title" id="modalTambahLabel">
@@ -66,18 +73,18 @@
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="bahan_baku" class="form-label">Bahan Baku</label>
+                                <label for="bahan_baku" class="form-label">Jumlah Bahan Baku</label>
                                 <input type="text" name="bahan_baku" id="bahan_baku" class="form-control"
-                                    placeholder="Contoh: LLDPE" required>
+                                    placeholder="Contoh: 85.700" required>
                             </div>
                             <div class="col-md-6">
-                                <label for="pewarna" class="form-label">Pewarna</label>
+                                <label for="pewarna" class="form-label">Jumlah Pewarna</label>
                                 <input type="text" name="pewarna" id="pewarna" class="form-control"
-                                    placeholder="Contoh: Merah" required>
+                                    placeholder="Contoh: 531" required>
                             </div>
                             <div class="col-md-12">
                                 <label for="supplier" class="form-label">Supplier</label>
-                                <input type="text" name="supplier" id="supplier" class="form-control"
+                                <input type="text" name="supplier_iso" id="supplier_iso" class="form-control"
                                     placeholder="Contoh: PT. Sumber Rejeki" required>
                             </div>
                         </div>
@@ -94,5 +101,53 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal Edit Data --}}
+    @foreach ($dataPengadaan as $item)
+        <div class="modal fade" id="modalEdit{{ $item->id }}" tabindex="-1"
+            aria-labelledby="modalEditLabel{{ $item->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0 shadow">
+                    <form action="{{ route('pengadaan.update', $item->id) }}" method="POST">
+                        @csrf
+                        <div class="modal-header bg-dark text-white">
+                            <h5 class="modal-title" id="modalEditLabel{{ $item->id }}">
+                                <i></i> Edit Data Pengadaan
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Tutup"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="bahan_baku{{ $item->id }}" class="form-label">Bahan Baku</label>
+                                    <input type="text" name="bahan_baku" id="bahan_baku{{ $item->id }}"
+                                        class="form-control" value="{{ $item->bahan_baku }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="pewarna{{ $item->id }}" class="form-label">Pewarna</label>
+                                    <input type="text" name="pewarna" id="pewarna{{ $item->id }}"
+                                        class="form-control" value="{{ $item->pewarna }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="supplier_iso{{ $item->id }}" class="form-label">Supplier</label>
+                                    <input type="text" name="supplier_iso" id="supplier_iso{{ $item->id }}"
+                                        class="form-control" value="{{ $item->supplier_iso }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer bg-light">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                <i class="fas fa-times"></i> Batal
+                            </button>
+                            <button type="submit" class="btn btn-dark">
+                                <i class="fas fa-save"></i> Simpan Perubahan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
 @endsection

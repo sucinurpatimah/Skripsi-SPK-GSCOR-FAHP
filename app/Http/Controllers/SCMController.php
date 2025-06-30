@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pengadaan;
 use App\Models\Perencanaan;
 use Illuminate\Http\Request;
 
 class SCMController extends Controller
 {
+    //Kelola Data Perencanaan
     function perencanaan()
     {
         $dataPerencanaan = Perencanaan::all();
@@ -60,9 +62,54 @@ class SCMController extends Controller
         return redirect()->route('perencanaan')->with('success', 'Data berhasil dihapus.');
     }
 
+    //Kelola Data Pengadaan
     function pengadaan()
     {
-        return view('admin/pengadaan');
+        $dataPengadaan = Pengadaan::all();
+        return view('admin/pengadaan', compact('dataPengadaan'));
+    }
+
+    public function storePengadaan(Request $request)
+    {
+        $request->validate([
+            'bahan_baku' => 'required|string|max:255',
+            'pewarna' => 'nullable|string|max:255',
+            'supplier_iso' => 'nullable|string|max:255',
+        ]);
+
+        Pengadaan::create([
+            'bahan_baku' => $request->bahan_baku,
+            'pewarna' => $request->pewarna,
+            'supplier_iso' => $request->supplier_iso,
+        ]);
+
+        return redirect()->route('pengadaan')->with('success', 'Data berhasil ditambahkan.');
+    }
+
+    public function updatePengadaan(Request $request, $id)
+    {
+        $request->validate([
+            'bahan_baku' => 'required|string|max:255',
+            'pewarna' => 'nullable|string|max:255',
+            'supplier_iso' => 'nullable|string|max:255',
+        ]);
+
+        $data = Pengadaan::findOrFail($id);
+        $data->update([
+            'bahan_baku' => $request->bahan_baku,
+            'pewarna' => $request->pewarna,
+            'supplier_iso' => $request->supplier_iso,
+        ]);
+
+        return redirect()->route('pengadaan')->with('success', 'Data berhasil diperbarui.');
+    }
+
+    public function deletePengadaan($id)
+    {
+        $data = Pengadaan::findOrFail($id);
+        $data->delete();
+
+        return redirect()->route('pengadaan')->with('success', 'Data berhasil dihapus.');
     }
 
     function produksi()

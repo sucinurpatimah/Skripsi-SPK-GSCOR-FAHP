@@ -25,7 +25,7 @@
                         <tr>
                             <th class="text-center">Tahun</th>
                             <th class="text-center">Bulan</th>
-                            <th class="text-center">Permintaan (Kg)</th>
+                            <th class="text-center">Permintaan</th>
                             <th class="text-center">Jumlah Pekerja</th>
                             <th class="text-center">Aksi</th>
                         </tr>
@@ -35,8 +35,8 @@
                             <tr>
                                 <td class="text-center">{{ $item->tahun }}</td>
                                 <td class="text-center">{{ $item->bulan }}</td>
-                                <td class="text-center">{{ number_format($item->permintaan, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ $item->jumlah_pekerja }}</td>
+                                <td class="text-center">{{ number_format($item->permintaan, 0, ',', '.') }} Kg</td>
+                                <td class="text-center">{{ $item->jumlah_pekerja }} Orang</td>
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#modalEdit{{ $item->id }}">

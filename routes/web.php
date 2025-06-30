@@ -22,11 +22,20 @@ Route::middleware(['auth'])->group(function () {
     //Admin
     Route::get('/admin', [AdminController::class, 'index']);
     Route::get('/admin/admin', [AdminController::class, 'admin'])->name('dashboard.admin');
+
+    //Kelola Data Perencanaan
     Route::get('Kelola-Data-Perencanaan', [SCMController::class, 'perencanaan'])->name('perencanaan');
     Route::post('Tambah-Data-Perencanaan', [SCMController::class, 'storePerencanaan'])->name('perencanaan.store');
     Route::post('Edit-Data-Perencanaan/{id}/update', [SCMController::class, 'updatePerencanaan'])->name('perencanaan.update');
     Route::delete('Delete-Data-Perencanaan/{id}', [SCMController::class, 'deletePerencanaan'])->name('perencanaan.delete');
+
+    //Kelola Data Pengadaan
     Route::get('Kelola-Data-Pengadaan', [SCMController::class, 'pengadaan'])->name('pengadaan');
+    Route::post('Tambah-Data-Pengadaan', [SCMController::class, 'storePengadaan'])->name('pengadaan.store');
+    Route::post('Edit-Data-Pengadaan/{id}/update', [SCMController::class, 'updatePengadaan'])->name('pengadaan.update');
+    Route::delete('Delete-Data-Pengadaan/{id}', [SCMController::class, 'deletePengadaan'])->name('pengadaan.delete');
+
+    //Kelola Data Produksi
     Route::get('Kelola-Data-Produksi', [SCMController::class, 'produksi'])->name('produksi');
     Route::get('Kelola-Data-Distribusi', [SCMController::class, 'distribusi'])->name('distribusi');
     Route::get('Kelola-Data-Pengembalian', [SCMController::class, 'pengembalian'])->name('pengembalian');
