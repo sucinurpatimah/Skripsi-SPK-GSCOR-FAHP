@@ -20,32 +20,34 @@
                             <th class="text-center" style="width: 40px;">Opsi</th>
                             <th class="text-center">Variabel</th>
                             <th class="text-center">Indikator</th>
+                            <th class="text-center">Keterangan</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @forelse ($dataPerencanaan as $item) --}}
-                        <tr>
-                            <td class="text-center">
-                                <input type="checkbox" name="selected[]">
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-center">
-                                {{-- Button Aksi --}}
-                                <a href="#" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <a href="#" class="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash-alt"></i> Hapus
-                                </a>
-                            </td>
-                        </tr>
-                        {{-- @empty
-                    <tr>
-                        <td colspan="4" class="text-center text-muted">Belum ada data perencanaan.</td>
-                    </tr>
-                    @endforelse --}}
+                        @forelse ($dataGscor as $item)
+                            <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" name="selected[]">
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-center">
+                                    {{-- Button Aksi --}}
+                                    <a href="#" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="#" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Hapus
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">Belum ada data Green SCOR.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
