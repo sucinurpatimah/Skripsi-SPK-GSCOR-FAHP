@@ -11,26 +11,25 @@
                 <table class="table table-bordered mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th class="text-center">Listrik (Kwh)</th>
-                            <th class="text-center">Air (M3)</th>
-                            <th class="text-center">Hasil Produksi (Kg)</th>
-                            <th class="text-center">Sampah (Kg)</th>
+                            <th class="text-center">Listrik</th>
+                            <th class="text-center">Air</th>
+                            <th class="text-center">Hasil Produksi</th>
+                            <th class="text-center">Sampah</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @forelse ($dataPerencanaan as $item) --}}
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">Belum ada data produksi.</td>
-                            {{-- <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td> --}}
-                        </tr>
-                        {{-- @empty
-                <tr>
-                    <td colspan="5" class="text-center text-muted">Belum ada data perencanaan.</td>
-                </tr>
-            @endforelse --}}
+                        @forelse ($dataProduksi as $item)
+                            <tr>
+                                <td class="text-center">{{ number_format($item->listrik, 0, ',', '.') }} Kwh</td>
+                                <td class="text-center">{{ number_format($item->air, 0, ',', '.') }} M3</td>
+                                <td class="text-center">{{ number_format($item->hasil_produksi, 0, ',', '.') }} Kg</td>
+                                <td class="text-center">{{ number_format($item->sampah, 0, ',', '.') }} Kg</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">Belum ada data produksi.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

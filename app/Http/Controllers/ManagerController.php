@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengadaan;
 use App\Models\Perencanaan;
+use App\Models\Produksi;
 use Illuminate\Http\Request;
 
 class ManagerController extends Controller
@@ -27,7 +28,8 @@ class ManagerController extends Controller
 
     function produksi()
     {
-        return view('manager/produksi');
+        $dataProduksi = Produksi::all();
+        return view('manager/produksi', compact('dataProduksi'));
     }
 
     function distribusi()
