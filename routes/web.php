@@ -49,6 +49,9 @@ Route::middleware(['auth'])->group(function () {
 
     //Kelola Data Pengembalian
     Route::get('Kelola-Data-Pengembalian', [SCMController::class, 'pengembalian'])->name('pengembalian');
+    Route::post('Tambah-Data-Pengembalian', [SCMController::class, 'storePengembalian'])->name('pengembalian.store');
+    Route::post('Edit-Data-Pengembalian/{id}/update', [SCMController::class, 'updatePengembalian'])->name('pengembalian.update');
+    Route::delete('Delete-Data-Pengembalian/{id}', [SCMController::class, 'deletePengembalian'])->name('pengembalian.delete');
 
     //Kelola Data SCOR
     Route::get('Kelola-Data-SCOR', [SCORController::class, 'index'])->name('scor');

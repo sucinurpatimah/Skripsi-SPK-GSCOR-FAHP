@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Distribusi;
 use App\Models\Pengadaan;
+use App\Models\Pengembalian;
 use App\Models\Perencanaan;
 use App\Models\Produksi;
 use Illuminate\Http\Request;
@@ -221,6 +222,50 @@ class SCMController extends Controller
     //Kelola Data Pengembalian
     function pengembalian()
     {
-        return view('admin/pengembalian');
+        $dataPengembalian = Pengembalian::all();
+        return view('admin/pengembalian', compact('dataPengembalian'));
+    }
+
+    public function storePengembalian(Request $request)
+    {
+        $request->validate([
+            'nama_agen' => 'required|string|max:255',
+            'alamat' => 'required|string',
+            'produk_dikembalikan' => 'required|numeric|min:0',
+        ]);
+
+        Pengembalian::create([
+            'nama_agen' => $request->nama_agen,
+            'alamat' => $request->alamat,
+            'produk_dikembalikan' => $request->produk_dikembalikan,
+        ]);
+
+        return redirect()->route('pengembalian')->with('success', 'Data berhasil ditambahkan.');
+    }
+
+    public function updatePengembalian(Request $request, $id)
+    {
+        $request->validate([
+            'nama_agen' => 'required|string|max:255',
+            'alamat' => 'required|string',
+            'produk_dikembalikan' => 'required|numeric|min:0',
+        ]);
+
+        $data = Pengembalian::findOrFail($id);
+        $data->update([
+            'nama_agen' => $request->nama_agen,
+            'alamat' => $request->alamat,
+            'produk_dikembalikan' => $request->produk_dikembalikan,
+        ]);
+
+        return redirect()->route('pengembalian')->with('success', 'Data berhasil diperbarui.');
+    }
+
+    public function deletePengembalian($id)
+    {
+        $data = Pengembalian::findOrFail($id);
+        $data->delete();
+
+        return redirect()->route('pengembalian')->with('success', 'Data berhasil dihapus.');
     }
 }
