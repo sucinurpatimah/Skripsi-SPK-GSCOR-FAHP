@@ -73,6 +73,13 @@
         </div>
     </div>
 
+    <div class="text-center mt-3">
+        <form action="{{ route('kpi.storeSelected') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-dark">Pilih</button>
+        </form>
+    </div>
+
     <!-- Modal Tambah Data -->
     <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -118,8 +125,8 @@
                             </div>
                             <div class="col-md-12">
                                 <label for="keterangan" class="form-label">Keterangan</label>
-                                <textarea name="keterangan" id="keterangan" rows="3" class="form-control" placeholder="Tulis Keterangan Disini"
-                                    required></textarea>
+                                <textarea name="keterangan" id="keterangan" rows="3" class="form-control"
+                                    placeholder="Tulis Keterangan Disini" required></textarea>
                             </div>
                         </div>
                     </div>

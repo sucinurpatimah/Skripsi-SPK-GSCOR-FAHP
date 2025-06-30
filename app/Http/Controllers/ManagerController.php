@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Distribusi;
+use App\Models\GSCOR;
 use App\Models\Pengadaan;
 use App\Models\Pengembalian;
 use App\Models\Perencanaan;
@@ -55,7 +56,8 @@ class ManagerController extends Controller
 
     function gscor()
     {
-        return view('manager/gscor');
+        $dataGscor = GSCOR::all();
+        return view('manager/gscor', compact('dataGscor'));
     }
 
     function kpi()
