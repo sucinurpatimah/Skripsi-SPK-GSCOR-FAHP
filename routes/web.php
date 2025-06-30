@@ -61,6 +61,9 @@ Route::middleware(['auth'])->group(function () {
 
     //Kelola Data GSCOR
     Route::get('Kelola-Data-GreenSCOR', [GSCORController::class, 'index'])->name('gscor');
+    Route::post('Tambah-Data-GreenSCOR', [GSCORController::class, 'storeGscor'])->name('gscor.store');
+    Route::post('Edit-Data-GreenSCOR/{id}/update', [GSCORController::class, 'updateGscor'])->name('gscor.update');
+    Route::delete('Delete-Data-GreenSCOR/{id}', [GSCORController::class, 'deleteGscor'])->name('gscor.delete');
 
     //Kelola Data KPI
     Route::get('Kelola-Data-KPI', [KPIController::class, 'index'])->name('kpi');

@@ -46,7 +46,6 @@
                                     style="max-width: 300px; white-space: normal; word-wrap: break-word; text-align: justify;">
                                     {{ $item->keterangan }}
                                 </td>
-
                                 <td class="text-center">
                                     {{-- Button Aksi --}}
                                     <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
