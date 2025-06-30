@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Distribusi;
 use App\Models\Pengadaan;
 use App\Models\Perencanaan;
 use App\Models\Produksi;
@@ -170,9 +171,54 @@ class SCMController extends Controller
     //Kelola Data Distribusi
     function distribusi()
     {
-        return view('admin/distribusi');
+        $dataDistribusi = Distribusi::all();
+        return view('admin/distribusi', compact('dataDistribusi'));
     }
 
+    public function storeDistribusi(Request $request)
+    {
+        $request->validate([
+            'nama_agen' => 'required|string|max:255',
+            'alamat' => 'required|string',
+            'produk_dikirim' => 'required|numeric|min:0',
+        ]);
+
+        Distribusi::create([
+            'nama_agen' => $request->nama_agen,
+            'alamat' => $request->alamat,
+            'produk_dikirim' => $request->produk_dikirim,
+        ]);
+
+        return redirect()->route('distribusi')->with('success', 'Data berhasil ditambahkan.');
+    }
+
+    public function updateDistribusi(Request $request, $id)
+    {
+        $request->validate([
+            'nama_agen' => 'required|string|max:255',
+            'alamat' => 'required|string',
+            'produk_dikirim' => 'required|numeric|min:0',
+        ]);
+
+        $data = Distribusi::findOrFail($id);
+        $data->update([
+            'nama_agen' => $request->nama_agen,
+            'alamat' => $request->alamat,
+            'produk_dikirim' => $request->produk_dikirim,
+        ]);
+
+        return redirect()->route('distribusi')->with('success', 'Data berhasil diperbarui.');
+    }
+
+    public function deleteDistribusi($id)
+    {
+        $data = Distribusi::findOrFail($id);
+        $data->delete();
+
+        return redirect()->route('distribusi')->with('success', 'Data berhasil dihapus.');
+    }
+
+    //Kelola Data Pengembalian
     function pengembalian()
     {
         return view('admin/pengembalian');

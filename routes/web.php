@@ -43,6 +43,9 @@ Route::middleware(['auth'])->group(function () {
 
     //Kelola Data Distribusi
     Route::get('Kelola-Data-Distribusi', [SCMController::class, 'distribusi'])->name('distribusi');
+    Route::post('Tambah-Data-Distribusi', [SCMController::class, 'storeDistribusi'])->name('distribusi.store');
+    Route::post('Edit-Data-Distribusi/{id}/update', [SCMController::class, 'updateDistribusi'])->name('distribusi.update');
+    Route::delete('Delete-Data-Distribusi/{id}', [SCMController::class, 'deleteDistribusi'])->name('distribusi.delete');
 
     //Kelola Data Pengembalian
     Route::get('Kelola-Data-Pengembalian', [SCMController::class, 'pengembalian'])->name('pengembalian');

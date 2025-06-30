@@ -5,6 +5,12 @@
 
 @section('content')
 
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="d-flex justify-content-end mb-3">
         <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalTambah">
             <i class="fas fa-plus"></i> Tambah Data
