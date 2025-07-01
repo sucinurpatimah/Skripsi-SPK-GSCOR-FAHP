@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Distribusi;
 use App\Models\GSCOR;
+use App\Models\KPI;
 use App\Models\Pengadaan;
 use App\Models\Pengembalian;
 use App\Models\Perencanaan;
@@ -62,7 +63,8 @@ class ManagerController extends Controller
 
     function kpi()
     {
-        return view('manager/kpi');
+        $dataKPI = KPI::all();
+        return view('manager/kpi', compact('dataKPI'));
     }
 
     function laporan()
