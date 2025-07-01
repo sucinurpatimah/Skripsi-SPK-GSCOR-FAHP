@@ -68,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
     //Kelola Data KPI
     Route::get('Kelola-Data-KPI', [KPIController::class, 'index'])->name('kpi');
     Route::post('Tambah-Data-KPI', [KPIController::class, 'storeSelected'])->name('kpi.storeSelected');
+    Route::delete('Delete-Data-KPI/{id}', [KPIController::class, 'deleteKpi'])->name('kpi.delete');
 
     //Kelola Perhitungan
     Route::get('Kelola-Perhitungan', [KPIController::class, 'perhitungan'])->name('perhitungan');

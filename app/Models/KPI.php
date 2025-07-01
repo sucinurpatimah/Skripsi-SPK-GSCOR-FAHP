@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class KPI extends Model
 {
+    protected $table = 'kpi';
     protected $fillable = [
         'scor_id',
         'gscor_id',
@@ -13,5 +14,6 @@ class KPI extends Model
         'atribut',
         'indikator',
         'keterangan',
+        'kategori',
     ];
 }
