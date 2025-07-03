@@ -11,7 +11,7 @@ class KPIController extends Controller
 {
     function index()
     {
-        $dataKPI = KPI::all();
+        $dataKPI = KPI::orderByRaw("FIELD(variabel, 'Plan', 'Source', 'Make', 'Deliver', 'Return')")->get();
         return view('admin/kpi', compact('dataKPI'));
     }
 

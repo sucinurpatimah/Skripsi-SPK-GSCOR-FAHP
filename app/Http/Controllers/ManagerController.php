@@ -51,19 +51,19 @@ class ManagerController extends Controller
 
     function scor()
     {
-        $dataScor = SCOR::all();
+        $dataScor = SCOR::orderByRaw("FIELD(variabel, 'Plan', 'Source', 'Make', 'Deliver', 'Return')")->get();
         return view('manager/scor', compact('dataScor'));
     }
 
     function gscor()
     {
-        $dataGscor = GSCOR::all();
+        $dataGscor = GSCOR::orderByRaw("FIELD(variabel, 'Plan', 'Source', 'Make', 'Deliver', 'Return')")->get();
         return view('manager/gscor', compact('dataGscor'));
     }
 
     function kpi()
     {
-        $dataKPI = KPI::all();
+        $dataKPI = KPI::orderByRaw("FIELD(variabel, 'Plan', 'Source', 'Make', 'Deliver', 'Return')")->get();
         return view('manager/kpi', compact('dataKPI'));
     }
 

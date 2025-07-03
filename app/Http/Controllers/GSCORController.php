@@ -9,7 +9,7 @@ class GSCORController extends Controller
 {
     function index()
     {
-        $dataGscor = GSCOR::all();
+        $dataGscor = GSCOR::orderByRaw("FIELD(variabel, 'Plan', 'Source', 'Make', 'Deliver', 'Return')")->get();
         return view('admin/gscor', compact('dataGscor'));
     }
 

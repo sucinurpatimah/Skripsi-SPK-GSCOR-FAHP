@@ -37,7 +37,7 @@
                             <tr>
                                 <td class="text-center">{{ $item->variabel }}</td>
                                 <td class="text-center">{{ $item->atribut }}</td>
-                                <td class="text-center" style="width: 250px;">{{ $item->indikator }}</td>
+                                <td class="text-center" style="width: 200px;">{{ $item->indikator }}</td>
                                 <td
                                     style="max-width: 300px; text-align: justify; white-space: normal; word-wrap: break-word;">
                                     {{ $item->keterangan }}
@@ -46,7 +46,7 @@
                                 <td class="text-center">
                                     {{ $item->skor !== null ? number_format($item->skor, 3) : '-' }}
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center white-space: normal; word-wrap: break-word;">
                                     <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#modalSkor{{ $item->id }}">
                                         <i class="fas fa-edit"></i> Input Skor

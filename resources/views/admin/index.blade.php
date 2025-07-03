@@ -6,7 +6,7 @@
 @section('content')
 
 
-    {{-- Grafik atau Statistik Bisa Ditambahkan Di Sini --}}
+    {{-- Grafik  --}}
     <div class="card mt-4 mb-4">
         <div class="card-header"><i class="fas fa-chart-area me-1"></i>Nilai Akhir SCM</div>
         <div class="card-body">
@@ -14,6 +14,7 @@
         </div>
     </div>
 
+    {{-- Tabel Rekomendasi Perbaikan --}}
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>

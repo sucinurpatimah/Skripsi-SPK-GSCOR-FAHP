@@ -9,7 +9,7 @@ class SCORController extends Controller
 {
     function index()
     {
-        $dataScor = SCOR::all();
+        $dataScor = SCOR::orderByRaw("FIELD(variabel, 'Plan', 'Source', 'Make', 'Deliver', 'Return')")->get();
         return view('admin/scor', compact('dataScor'));
     }
 
@@ -17,7 +17,7 @@ class SCORController extends Controller
     {
         $request->validate([
             'variabel' => 'required|string|in:Plan,Source,Make,Deliver,Return',
-            'atribut' => 'required|string|in:Reliability,Responsiveness,Sustainability,Flexibility,Cost,Asset Management',
+            'atribut' => 'required|string|in:Reliability,Responsiveness,Agility,Sustainability,Cost,Asset Management',
             'indikator' => 'required|string|min:3',
             'keterangan' => 'nullable|string',
         ]);
