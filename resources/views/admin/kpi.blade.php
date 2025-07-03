@@ -17,12 +17,19 @@
                 <table class="table table-bordered mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th class="text-center">Variabel</th>
-                            <th class="text-center">Atribut</th>
-                            <th class="text-center">Indikator</th>
-                            <th class="text-center">Keterangan</th>
-                            <th class="text-center">Kategori</th>
-                            <th class="text-center">Aksi</th>
+                            <th class="text-center align-middle">Variabel</th>
+                            <th class="text-center align-middle">Atribut</th>
+                            <th class="text-center align-middle">Indikator</th>
+                            <th class="text-center align-middle">Keterangan</th>
+                            <th class="text-center align-middle">Kategori</th>
+                            <th class="text-center align-middle" style="width: 80px;">
+                                Rata-Rata Skor
+                            </th>
+                            <th class="text-center
+                                align-middle"
+                                style="white-space: nowrap;">
+                                Aksi
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,6 +44,13 @@
                                 </td>
                                 <td class="text-center">{{ $item->kategori }}</td>
                                 <td class="text-center">
+                                    {{ $item->skor !== null ? number_format($item->skor, 3) : '-' }}
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#modalSkor{{ $item->id }}">
+                                        <i class="fas fa-edit"></i> Input Skor
+                                    </button>
                                     <form action="{{ route('kpi.delete', $item->id) }}" method="POST" class="d-inline"
                                         onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')">
                                         @csrf
@@ -47,9 +61,41 @@
                                     </form>
                                 </td>
                             </tr>
+
+                            <!-- Modal Input Skor untuk setiap item -->
+                            <div class="modal fade" id="modalSkor{{ $item->id }}" tabindex="-1"
+                                aria-labelledby="modalSkorLabel{{ $item->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="{{ route('kpi.updateSkor', $item->id) }}" method="POST">
+                                            @csrf
+                                            <div class="modal-header bg-dark text-white">
+                                                <h5 class="modal-title">Input Skor Kuesioner</h5>
+                                                <button type="button" class="btn-close btn-close-white"
+                                                    data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p><strong>Indikator:</strong> {{ $item->indikator }}</p>
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <div class="mb-2">
+                                                        <label for="skor{{ $i }}">Skor Responden
+                                                            {{ $i }}</label>
+                                                        <input type="number" name="skor[]" class="form-control"
+                                                            min="1" max="5" step="0.01">
+                                                    </div>
+                                                @endfor
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-dark">Simpan Rata-rata</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center text-muted">Belum ada data KPI.</td>
+                                <td colspan="7" class="text-center text-muted">Belum ada data KPI.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -58,10 +104,10 @@
         </div>
     </div>
 
-    {{-- <div class="d-flex justify-content-center mb-3 mt-5">
-        <a href="#" class="btn btn-dark">
-            <i class="fas fa-calculator me-2"></i> Menghitung
+    <div class="d-flex justify-content-center mb-3 mt-5">
+        <a href="{{ route('perhitungan.pairwise') }}" class="btn btn-dark">
+            <i></i> Lanjutkan ke Pairwise Comparison Matrix
         </a>
-    </div> --}}
+    </div>
 
 @endsection

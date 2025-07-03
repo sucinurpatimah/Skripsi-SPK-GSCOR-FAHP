@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GSCORController;
 use App\Http\Controllers\KPIController;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\SCMController;
 use App\Http\Controllers\SCORController;
 use App\Http\Controllers\SesiController;
@@ -68,10 +69,15 @@ Route::middleware(['auth'])->group(function () {
     //Kelola Data KPI
     Route::get('Kelola-Data-KPI', [KPIController::class, 'index'])->name('kpi');
     Route::post('Tambah-Data-KPI', [KPIController::class, 'storeSelected'])->name('kpi.storeSelected');
+    Route::post('/kpi/update-skor/{id}', [KPIController::class, 'updateSkor'])->name('kpi.updateSkor');
     Route::delete('Delete-Data-KPI/{id}', [KPIController::class, 'deleteKpi'])->name('kpi.delete');
 
     //Kelola Perhitungan
-    Route::get('Kelola-Perhitungan', [KPIController::class, 'perhitungan'])->name('perhitungan');
+    Route::get('Kelola-Perhitungan', [PerhitunganController::class, 'perhitungan'])->name('perhitungan');
+    Route::get('Pairwise-Comparison-Matrix', [PerhitunganController::class, 'pairwise'])->name('perhitungan.pairwise');
+    Route::get('Uji-Konsistensi', [PerhitunganController::class, 'konsistensi'])->name('perhitungan.konsistensi');
+    Route::get('Snorm-De-Boer', [PerhitunganController::class, 'snorm'])->name('perhitungan.snorm');
+    Route::get('Nilai-Akhir-SCM', [PerhitunganController::class, 'nilaiAkhir'])->name('perhitungan.nilai-akhir');
 
     //Manager
     Route::get('/manager', [ManagerController::class, 'index'])->name('dashboard.manager');

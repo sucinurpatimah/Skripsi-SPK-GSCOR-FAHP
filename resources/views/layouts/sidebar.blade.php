@@ -49,7 +49,6 @@
                             </a>
                         </nav>
                     </div>
-
                     <a class="nav-link mb-3 {{ request()->routeIs('scor') ? 'active' : '' }}"
                         href="{{ route('scor') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -65,11 +64,42 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                         Kelola Data KPI
                     </a>
-                    <a class="nav-link mb-3 {{ request()->routeIs('perhitungan') ? 'active' : '' }}"
-                        href="{{ route('perhitungan') }}">
+
+                    {{-- Dropdown Menu Kelola Perhitungan --}}
+                    <a class="nav-link collapsed mb-3 {{ request()->is('perhitungan*') ? 'active' : '' }}"
+                        href="#" data-bs-toggle="collapse" data-bs-target="#collapsePerhitungan"
+                        aria-expanded="{{ request()->is('perhitungan*') ? 'true' : 'false' }}"
+                        aria-controls="collapsePerhitungan">
                         <div class="sb-nav-link-icon"><i class="fas fa-calculator"></i></div>
                         Kelola Perhitungan
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
+                    <div class="collapse {{ request()->is('perhitungan*') ? 'show' : '' }}" id="collapsePerhitungan"
+                        data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested">
+                            <a class="nav-link mb-2 {{ request()->routeIs('perhitungan.pairwise') ? 'active' : '' }}"
+                                href="{{ route('perhitungan.pairwise') }}">
+                                <i class="fas fa-th-list me-2"></i>
+                                Pairwise Comparison Matrix
+                            </a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('perhitungan.konsistensi') ? 'active' : '' }}"
+                                href="{{ route('perhitungan.konsistensi') }}">
+                                <i class="fas fa-check-circle me-2"></i>
+                                Uji Konsistensi
+                            </a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('perhitungan.snorm') ? 'active' : '' }}"
+                                href="{{ route('perhitungan.snorm') }}">
+                                <i class="fas fa-equals me-2"></i>
+                                Normalisasi Snorm De Boer
+                            </a>
+                            <a class="nav-link mb-2 {{ request()->routeIs('perhitungan.nilai-akhir') ? 'active' : '' }}"
+                                href="{{ route('perhitungan.nilai-akhir') }}">
+                                <i class="fas fa-chart-line me-2"></i>
+                                Nilai Akhir SCM
+                            </a>
+                        </nav>
+                    </div>
+
 
                     {{-- Jika manager --}}
                 @elseif(Auth::user()->role == 'manager')
