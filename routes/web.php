@@ -69,12 +69,17 @@ Route::middleware(['auth'])->group(function () {
     //Kelola Data KPI
     Route::get('Kelola-Data-KPI', [KPIController::class, 'index'])->name('kpi');
     Route::post('Tambah-Data-KPI', [KPIController::class, 'storeSelected'])->name('kpi.storeSelected');
+    // Input skor kuesioner dan otomatis menampilkan skor rata-rata
     Route::post('/kpi/update-skor/{id}', [KPIController::class, 'updateSkor'])->name('kpi.updateSkor');
     Route::delete('Delete-Data-KPI/{id}', [KPIController::class, 'deleteKpi'])->name('kpi.delete');
 
     //Kelola Perhitungan
     Route::get('Kelola-Perhitungan', [PerhitunganController::class, 'perhitungan'])->name('perhitungan');
+    // Proses pembuatan matriks perbandingan berpasangan dan normalisasi matriks
+    Route::post('Pairwise-Comparison-Matrix/generate', [PerhitunganController::class, 'generatePairwise'])->name('perhitungan.pairwise.generate');
     Route::get('Pairwise-Comparison-Matrix', [PerhitunganController::class, 'pairwise'])->name('perhitungan.pairwise');
+    Route::post('Pairwise-Comparison-Matrix/normalize', [PerhitunganController::class, 'normalisasiPairwise'])
+        ->name('perhitungan.pairwise.normalisasi');
     Route::get('Uji-Konsistensi', [PerhitunganController::class, 'konsistensi'])->name('perhitungan.konsistensi');
     Route::get('Snorm-De-Boer', [PerhitunganController::class, 'snorm'])->name('perhitungan.snorm');
     Route::get('Nilai-Akhir-SCM', [PerhitunganController::class, 'nilaiAkhir'])->name('perhitungan.nilai-akhir');

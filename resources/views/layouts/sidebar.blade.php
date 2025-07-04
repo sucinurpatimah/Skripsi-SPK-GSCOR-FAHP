@@ -80,7 +80,7 @@
                             <a class="nav-link mb-2 {{ request()->routeIs('perhitungan.pairwise') ? 'active' : '' }}"
                                 href="{{ route('perhitungan.pairwise') }}">
                                 <i class="fas fa-th-list me-2"></i>
-                                Pairwise Comparison Matrix
+                                Matriks Perbandingan Berpasangan
                             </a>
                             <a class="nav-link mb-2 {{ request()->routeIs('perhitungan.konsistensi') ? 'active' : '' }}"
                                 href="{{ route('perhitungan.konsistensi') }}">

@@ -105,9 +105,13 @@
     </div>
 
     <div class="d-flex justify-content-center mb-3 mt-5">
-        <a href="{{ route('perhitungan.pairwise') }}" class="btn btn-dark">
-            <i></i> Lanjutkan ke Pairwise Comparison Matrix
-        </a>
+        <form action="{{ route('perhitungan.pairwise.generate') }}" method="POST"
+            onsubmit="return confirm('Apakah Anda yakin ingin melanjutkan perhitungan berikutnya? Pastikan data KPI sudah sesuai.')">
+            @csrf
+            <button type="submit" class="btn btn-dark">
+                <i></i> Buat Matriks Perbandingan Berpasangan
+            </button>
+        </form>
     </div>
 
 @endsection
