@@ -80,6 +80,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('Pairwise-Comparison-Matrix', [PerhitunganController::class, 'pairwise'])->name('perhitungan.pairwise');
     Route::post('Pairwise-Comparison-Matrix/normalize', [PerhitunganController::class, 'normalisasiPairwise'])
         ->name('perhitungan.pairwise.normalisasi');
+    Route::get('Pairwise-Comparison-Matrix/show', [PerhitunganController::class, 'showNormalized'])->name('pairwise.show');
     Route::get('Uji-Konsistensi', [PerhitunganController::class, 'konsistensi'])->name('perhitungan.konsistensi');
     Route::get('Snorm-De-Boer', [PerhitunganController::class, 'snorm'])->name('perhitungan.snorm');
     Route::get('Nilai-Akhir-SCM', [PerhitunganController::class, 'nilaiAkhir'])->name('perhitungan.nilai-akhir');
