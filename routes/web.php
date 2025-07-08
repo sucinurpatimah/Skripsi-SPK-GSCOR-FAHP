@@ -77,11 +77,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('Kelola-Perhitungan', [PerhitunganController::class, 'perhitungan'])->name('perhitungan');
     // Proses pembuatan matriks perbandingan berpasangan dan normalisasi matriks
     Route::post('Pairwise-Comparison-Matrix/generate', [PerhitunganController::class, 'generatePairwise'])->name('perhitungan.pairwise.generate');
-    Route::get('Pairwise-Comparison-Matrix', [PerhitunganController::class, 'pairwise'])->name('perhitungan.pairwise');
+    Route::get('Pairwise-Comparison-Matrix', [PerhitunganController::class, 'showNormalized'])->name('perhitungan.pairwise');
     Route::post('Pairwise-Comparison-Matrix/normalize', [PerhitunganController::class, 'normalisasiPairwise'])
         ->name('perhitungan.pairwise.normalisasi');
     Route::get('Pairwise-Comparison-Matrix/show', [PerhitunganController::class, 'showNormalized'])->name('pairwise.show');
+    //Proses perhitungan uji konsistensi
     Route::get('Uji-Konsistensi', [PerhitunganController::class, 'konsistensi'])->name('perhitungan.konsistensi');
+    Route::get('/uji-konsistensi', [PerhitunganController::class, 'showUjiKonsistensi'])->name('uji-konsistensi.show');
+    Route::post('/uji-konsistensi/generate', [PerhitunganController::class, 'ujiKonsistensi'])->name('uji-konsistensi.generate');
+    //Proses perhitugan normalisasi snorm de boer
     Route::get('Snorm-De-Boer', [PerhitunganController::class, 'snorm'])->name('perhitungan.snorm');
     Route::get('Nilai-Akhir-SCM', [PerhitunganController::class, 'nilaiAkhir'])->name('perhitungan.nilai-akhir');
 

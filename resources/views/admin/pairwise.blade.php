@@ -12,32 +12,34 @@
     {{-- Matriks Perbandingan --}}
     <div class="mt-4">
         <h4 class="fw-bold text-center mb-3">Matriks Perbandingan Berpasangan</h4>
-        <table class="table table-bordered">
-            <thead class="table-light">
-                <tr>
-                    <th class="text-center">Indikator</th>
-                    @foreach ($labels as $label)
-                        <th class="text-center">{{ $label }}</th>
-                    @endforeach
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($values as $i => $row)
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+                <thead class="table-light">
                     <tr>
-                        <th class="text-center">{{ array_values($labels)[$i] }}</th>
-                        @foreach ($row as $nilai)
-                            <td class="text-center">{{ is_numeric($nilai) ? number_format($nilai, 2) : '-' }}</td>
+                        <th class="text-center">Indikator</th>
+                        @foreach ($labels as $id => $label)
+                            <th class="text-center">{{ $label }}</th>
                         @endforeach
                     </tr>
-                @endforeach
-                <tr class="table-secondary fw-bold">
-                    <td class="text-center">Total</td>
-                    @foreach ($totals as $total)
-                        <td class="text-center">{{ number_format($total, 2) }}</td>
+                </thead>
+                <tbody>
+                    @foreach ($values as $indikatorId => $row)
+                        <tr>
+                            <th class="text-center">{{ $labels[$indikatorId] ?? '-' }}</th>
+                            @foreach ($row as $v)
+                                <td class="text-center">{{ is_numeric($v) ? number_format($v, 2) : '-' }}</td>
+                            @endforeach
+                        </tr>
                     @endforeach
-                </tr>
-            </tbody>
-        </table>
+                    <tr class="table-secondary fw-bold">
+                        <td class="text-center">Total</td>
+                        @foreach ($totals as $total)
+                            <td class="text-center">{{ number_format($total, 2) }}</td>
+                        @endforeach
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <div class="d-flex justify-content-center mb-3 mt-4">
             <form action="{{ route('perhitungan.pairwise.normalisasi') }}" method="POST"
@@ -59,21 +61,25 @@
                     <thead class="table-light">
                         <tr>
                             <th class="text-center">Indikator</th>
-                            @foreach ($labels as $label)
+                            @foreach ($labels as $id => $label)
                                 <th class="text-center">{{ $label }}</th>
                             @endforeach
                             <th class="text-center">Bobot Prioritas</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($normalized as $i => $row)
+                        @foreach ($normalized as $indikatorId => $row)
                             <tr>
-                                <th class="text-center">{{ array_values($labels)[$i] }}</th>
+                                <th class="text-center">{{ $labels[$indikatorId] ?? '-' }}</th>
                                 @foreach ($row as $v)
-                                    <td class="text-center">{{ is_numeric($v) ? number_format($v, 4) : '-' }}</td>
+                                    <td class="text-center">
+                                        {{ is_numeric($v) ? number_format($v, 4) : '-' }}
+                                    </td>
                                 @endforeach
                                 <td class="text-center fw-bold">
-                                    {{ isset($weights[$i]) && is_numeric($weights[$i]) ? number_format($weights[$i], 4) : '-' }}
+                                    {{ isset($weights[$indikatorId]) && is_numeric($weights[$indikatorId])
+                                        ? number_format($weights[$indikatorId], 4)
+                                        : '-' }}
                                 </td>
                             </tr>
                         @endforeach

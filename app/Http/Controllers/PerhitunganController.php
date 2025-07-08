@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KPI;
+use App\Models\UjiKonsistensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -64,7 +65,7 @@ class PerhitunganController extends Controller
             $totals[] = $sum;
         }
 
-        return view('admin.pairwise', compact('kpis', 'labels', 'values', 'totals'));
+        return view('admin/pairwise', compact('kpis', 'labels', 'values', 'totals'));
     }
 
     public function normalisasiPairwise()
@@ -73,8 +74,8 @@ class PerhitunganController extends Controller
             ->orderBy('id')
             ->get();
 
-        if ($kpis->count() < 5) {
-            return redirect()->route('kpi')->with('error', 'Minimal harus ada 5 indikator KPI.');
+        if ($kpis->count() < 3) {
+            return redirect()->route('kpi')->with('error', 'Minimal harus ada 3 indikator KPI.');
         }
 
         // Ambil matriks pairwise
@@ -117,25 +118,36 @@ class PerhitunganController extends Controller
             $weights[] = array_sum($baris) / count($baris);
         }
 
-        // Kosongkan tabel dulu supaya tidak duplikat
+        // Kosongkan tabel normalisasi
         DB::table('normalisasi_matriks')->truncate();
+        DB::table('bobot_prioritas')->truncate();
 
-        // Simpan ke DB
+        // Simpan normalisasi matriks
         foreach ($normalized as $i => $baris) {
             foreach ($baris as $j => $nilai) {
                 DB::table('normalisasi_matriks')->insert([
                     'indikator1_id' => $kpis[$i]->id,
                     'indikator2_id' => $kpis[$j]->id,
                     'nilai' => $nilai,
-                    'bobot_prioritas' => $i === $j ? $weights[$i] : null,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
             }
         }
 
-        return redirect()->route('pairwise.show')->with('success', 'Normalisasi Matriks Berhasil Disimpan.');
+        // Simpan bobot prioritas
+        foreach ($kpis as $i => $kpi) {
+            DB::table('bobot_prioritas')->insert([
+                'indikator_id' => $kpi->id,
+                'bobot_prioritas' => $weights[$i],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        return redirect()->route('pairwise.show')->with('success', 'Normalisasi Matriks dan Bobot Prioritas berhasil disimpan.');
     }
+
 
     public function showNormalized()
     {
@@ -170,7 +182,7 @@ class PerhitunganController extends Controller
                     ->value('nilai');
                 $baris[] = $nilai !== null ? $nilai : '-';
             }
-            $values[] = $baris;
+            $values[$row->id] = $baris;
         }
 
         // Hitung total kolom
@@ -183,11 +195,9 @@ class PerhitunganController extends Controller
             $totals[] = $sum;
         }
 
-        // Ambil matriks normalisasi (jika ada)
+        // Ambil matriks normalisasi
         $normalized = [];
-        $weights = [];
-        $adaDataNormalisasi = DB::table('normalisasi_matriks')->count() > 0;
-        if ($adaDataNormalisasi) {
+        if (DB::table('normalisasi_matriks')->count() > 0) {
             foreach ($kpis as $row) {
                 $baris = [];
                 foreach ($kpis as $col) {
@@ -197,16 +207,14 @@ class PerhitunganController extends Controller
                         ->value('nilai');
                     $baris[] = $nilai;
                 }
-                $normalized[] = $baris;
-            }
-            foreach ($kpis as $kpi) {
-                $bobot = DB::table('normalisasi_matriks')
-                    ->where('indikator1_id', $kpi->id)
-                    ->where('indikator2_id', $kpi->id)
-                    ->value('bobot_prioritas');
-                $weights[] = $bobot;
+                $normalized[$row->id] = $baris;
             }
         }
+
+        // Ambil bobot prioritas dari tabel bobot_prioritas
+        $weights = DB::table('bobot_prioritas')
+            ->pluck('bobot_prioritas', 'indikator_id')
+            ->toArray();
 
         return view('admin.pairwise', [
             'labels' => $labels,
@@ -217,9 +225,118 @@ class PerhitunganController extends Controller
         ]);
     }
 
-    function konsistensi()
+    public function konsistensi()
     {
-        return view('admin/konsistensi');
+        // Cek apakah sudah pernah dihitung
+        $hasil = UjiKonsistensi::latest()->first();
+
+        return view('admin/konsistensi', [
+            'hasil' => $hasil
+        ]);
+    }
+
+    public function ujiKonsistensi()
+    {
+        $kpis = KPI::orderByRaw("FIELD(variabel, 'Plan', 'Source', 'Make', 'Deliver', 'Return')")
+            ->orderBy('id')
+            ->get();
+
+        $weights = DB::table('bobot_prioritas')
+            ->pluck('bobot_prioritas', 'indikator_id')
+            ->toArray();
+
+        foreach ($kpis as $kpi) {
+            if (!isset($weights[$kpi->id]) || $weights[$kpi->id] === null) {
+                return redirect()->back()->with('error', "Bobot prioritas indikator ID {$kpi->id} tidak ditemukan.");
+            }
+        }
+
+        $lambdas = [];
+
+        foreach ($kpis as $kpi) {
+            $indikator_i = $kpi->id;
+            $sum_row = 0;
+
+            foreach ($kpis as $kpi2) {
+                $indikator_j = $kpi2->id;
+
+                $value = DB::table('pairwise_matrix')
+                    ->where('indikator1_id', $indikator_i)
+                    ->where('indikator2_id', $indikator_j)
+                    ->value('nilai') ?? 0;
+
+                $sum_row += $value * $weights[$indikator_j];
+            }
+
+            if ($weights[$indikator_i] == 0) {
+                return redirect()->back()->with('error', "Bobot prioritas indikator ID {$indikator_i} bernilai 0.");
+            }
+
+            $lambda_i = $sum_row / $weights[$indikator_i];
+            $lambdas[] = $lambda_i;
+        }
+
+        $lambda_max = array_sum($lambdas) / count($lambdas);
+
+        $n = count($kpis);
+        $ci = ($lambda_max - $n) / ($n - 1);
+
+        $ri_array = [
+            1 => 0.00,
+            2 => 0.00,
+            3 => 0.58,
+            4 => 0.90,
+            5 => 1.12,
+            6 => 1.24,
+            7 => 1.32,
+            8 => 1.41,
+            9 => 1.45,
+            10 => 1.49,
+            11 => 1.51,
+            12 => 1.48,
+            13 => 1.56,
+            14 => 1.57,
+            15 => 1.59,
+            16 => 1.60,
+            17 => 1.61,
+            18 => 1.62,
+            19 => 1.63,
+            20 => 1.64,
+            21 => 1.65,
+            22 => 1.66,
+            23 => 1.67,
+            24 => 1.68,
+            25 => 1.69,
+            26 => 1.70,
+            27 => 1.71,
+            28 => 1.72,
+            29 => 1.73,
+            30 => 1.74,
+        ];
+        $ri = $ri_array[$n] ?? 1.12;
+
+        $cr = $ri != 0 ? $ci / $ri : 0;
+        $status = $cr <= 0.1 ? 'Konsisten' : 'Tidak Konsisten';
+
+        UjiKonsistensi::truncate();
+        UjiKonsistensi::create([
+            'lambda_max' => $lambda_max,
+            'ci' => $ci,
+            'ri' => $ri,
+            'cr' => $cr,
+            'status' => $status,
+        ]);
+
+        return redirect()->route('uji-konsistensi.show')->with('success', 'Uji Konsistensi berhasil dihitung.');
+    }
+
+    public function showUjiKonsistensi()
+    {
+        $hasil = UjiKonsistensi::latest()->first();
+
+        return view('admin/konsistensi', [
+            'hasil' => $hasil
+        ]);
     }
 
     function snorm()
