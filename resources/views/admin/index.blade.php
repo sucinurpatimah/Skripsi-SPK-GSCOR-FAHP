@@ -70,4 +70,38 @@
         </div>
     </div>
 
+    <script>
+        // Ambil label indikator dan nilainya dari PHP
+        const labels = @json($labelsSingkat);
+        const dataNilaiAkhir = @json($hasil->pluck('nilai_akhir'));
+
+        const ctx = document.getElementById('myAreaChart').getContext('2d');
+        const myAreaChart = new Chart(ctx, {
+            type: 'line', // ubah menjadi line chart
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Nilai Akhir SCM',
+                    data: dataNilaiAkhir,
+                    fill: false,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    tension: 0.3, // membuat garis sedikit melengkung
+                    pointBackgroundColor: 'rgba(54, 162, 235, 1)', // titik di garis
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10 // Sesuaikan skala jika perlu
+                    }
+                }
+            }
+        });
+    </script>
+
 @endsection

@@ -33,7 +33,7 @@
 
                             if ($item->snorm >= 80) {
                                 $warnaSnorm = 'bg-success text-white';
-                                $statusSnorm = 'Bagus, tidak wajib rekomendasi';
+                                $statusSnorm = 'Bagus, tidak perlu rekomendasi';
                             } elseif ($item->snorm >= 60) {
                                 $warnaSnorm = 'bg-warning';
                                 $statusSnorm = 'Butuh perhatian';
