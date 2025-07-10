@@ -13,7 +13,7 @@
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
 
-    <div class="d-flex justify-content-center mb-3">
+    <div class="d-flex justify-content-center mb-3 mt-3">
         <form action="{{ route('snorm.generate') }}" method="POST"
             onsubmit="return confirm('Generate Normalisasi Snorm De Boer?')">
             @csrf
@@ -28,9 +28,9 @@
                 <table class="table table-bordered align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>Variabel</th>
-                            <th>Atribut</th>
-                            <th>Indikator</th>
+                            <th class="text-center">Variabel</th>
+                            <th class="text-center">Atribut</th>
+                            <th class="text-center">Indikator</th>
                             <th class="text-center">Nilai Kinerja</th>
                             <th class="text-center">Snorm De Boer</th>
                         </tr>
@@ -38,9 +38,9 @@
                     <tbody>
                         @foreach ($hasil as $row)
                             <tr>
-                                <td>{{ $row->kpi->variabel ?? '-' }}</td>
-                                <td>{{ $row->kpi->atribut ?? '-' }}</td>
-                                <td>{{ $row->kpi->indikator ?? '-' }}</td>
+                                <td class="text-center">{{ $row->kpi->variabel ?? '-' }}</td>
+                                <td class="text-center">{{ $row->kpi->atribut ?? '-' }}</td>
+                                <td class="text-center">{{ $row->kpi->indikator ?? '-' }}</td>
                                 <td class="text-center">{{ number_format($row->nilai_kinerja, 3) }}</td>
                                 <td class="text-center">{{ number_format($row->snorm_de_boer, 2) }}</td>
                             </tr>
@@ -51,9 +51,13 @@
 
             {{-- Tombol Lanjut Perhitungan Nilai Akhir SCM --}}
             <div class="d-flex justify-content-center mt-4">
-                <a href="{{ route('perhitungan.nilai-akhir') }}" class="btn btn-dark">
-                    Lanjut Perhitungan Nilai Akhir SCM
-                </a>
+                <form action="{{ route('nilai-akhir-scm.generate') }}" method="POST"
+                    onsubmit="return confirm('Generate Nilai Akhir SCM?')">
+                    @csrf
+                    <button type="submit" class="btn btn-dark">
+                        Lanjut Perhitungan Nilai Akhir SCM
+                    </button>
+                </form>
             </div>
         </div>
     @else

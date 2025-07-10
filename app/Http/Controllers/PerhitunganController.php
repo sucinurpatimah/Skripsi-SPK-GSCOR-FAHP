@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KinerjaIndikator;
 use App\Models\KPI;
+use App\Models\NilaiAkhirSCM;
 use App\Models\UjiKonsistensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -441,8 +442,55 @@ class PerhitunganController extends Controller
         return view('admin/snorm', compact('hasil'));
     }
 
+    //Proses Perhitunngan Nilai Akhir SCM
     function nilaiAkhir()
     {
-        return view('admin/nilaiAkhir');
+        $hasil = NilaiAkhirSCM::with('kpi')
+            ->join('kpi', 'nilai_akhir_scm.indikator_id', '=', 'kpi.id')
+            ->orderByRaw("FIELD(kpi.variabel, 'Plan', 'Source', 'Make', 'Deliver', 'Return')")
+            ->select('nilai_akhir_scm.*')
+            ->get();
+        $total = $hasil->sum('nilai_akhir');
+
+        return view('admin/nilaiAkhir', compact('hasil', 'total'));
+    }
+
+    public function generateNilaiAkhir()
+    {
+        $indikator = KPI::with(['bobotPrioritas', 'kinerjaIndikator'])->get();
+
+        foreach ($indikator as $item) {
+            if (!$item->bobotPrioritas || !$item->kinerjaIndikator) {
+                return redirect()->back()->with('error', "Data tidak lengkap pada indikator ID {$item->id}");
+            }
+        }
+
+        NilaiAkhirSCM::truncate();
+
+        foreach ($indikator as $item) {
+            $nilai = $item->bobotPrioritas->bobot_prioritas * $item->kinerjaIndikator->snorm_de_boer;
+
+            NilaiAkhirSCM::create([
+                'indikator_id' => $item->id,
+                'bobot_prioritas' => $item->bobotPrioritas->bobot_prioritas,
+                'snorm' => $item->kinerjaIndikator->snorm_de_boer,
+                'nilai_akhir' => $nilai
+            ]);
+        }
+
+        return redirect()->route('perhitungan.nilai-akhir')->with('success', 'Nilai Akhir SCM berhasil dihitung.');
+    }
+
+    public function updateRekomendasi(Request $request, $id)
+    {
+        $request->validate([
+            'rekomendasi' => 'nullable|string'
+        ]);
+
+        $item = NilaiAkhirSCM::findOrFail($id);
+        $item->rekomendasi = $request->rekomendasi;
+        $item->save();
+
+        return redirect()->route('perhitungan.nilai-akhir')->with('success', 'Rekomendasi berhasil diperbarui.');
     }
 }

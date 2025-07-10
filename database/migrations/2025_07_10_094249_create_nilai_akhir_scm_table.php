@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bobot_prioritas', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('indikator_id')->index();
-            $table->decimal('bobot_prioritas', 10, 8);
+        Schema::create('nilai_akhir_scm', function (Blueprint $table) {
+            $table->foreignId('indikator_id')->constrained('kpi')->onDelete('cascade');
+            $table->float('bobot_prioritas');
+            $table->float('snorm');
+            $table->float('nilai_akhir');
+            $table->text('rekomendasi')->nullable();
             $table->timestamps();
-
-            $table->foreign('indikator_id')->references('id')->on('kpi')->onDelete('cascade');
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bobot_prioritas');
+        Schema::dropIfExists('nilai_akhir_scm');
     }
 };
