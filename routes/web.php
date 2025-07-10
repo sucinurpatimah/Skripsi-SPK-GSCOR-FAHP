@@ -86,7 +86,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/uji-konsistensi', [PerhitunganController::class, 'showUjiKonsistensi'])->name('uji-konsistensi.show');
     Route::post('/uji-konsistensi/generate', [PerhitunganController::class, 'ujiKonsistensi'])->name('uji-konsistensi.generate');
     //Proses perhitugan normalisasi snorm de boer
-    Route::get('Snorm-De-Boer', [PerhitunganController::class, 'snorm'])->name('perhitungan.snorm');
+    Route::get('Snorm-De-Boer', [PerhitunganController::class, 'showSnorm'])->name('perhitungan.snorm');
+    Route::post('Snorm-De-Boer/generate', [PerhitunganController::class, 'Snormgenerate'])->name('snorm.generate');
+    Route::get('Snorm-De-Boer/show', [PerhitunganController::class, 'showSnorm'])->name('snorm.show');
+    //Proses perhitungan nilai akhir scm
     Route::get('Nilai-Akhir-SCM', [PerhitunganController::class, 'nilaiAkhir'])->name('perhitungan.nilai-akhir');
 
     //Manager

@@ -15,5 +15,6 @@ class KPI extends Model
         'indikator',
         'keterangan',
         'kategori',
+        'skor',
     ];
 }

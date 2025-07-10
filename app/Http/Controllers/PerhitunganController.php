@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KinerjaIndikator;
 use App\Models\KPI;
 use App\Models\UjiKonsistensi;
 use Illuminate\Http\Request;
@@ -225,6 +226,7 @@ class PerhitunganController extends Controller
         ]);
     }
 
+    //Proses Hitung Uji Konsistensi
     public function konsistensi()
     {
         // Cek apakah sudah pernah dihitung
@@ -320,10 +322,10 @@ class PerhitunganController extends Controller
 
         UjiKonsistensi::truncate();
         UjiKonsistensi::create([
-            'lambda_max' => $lambda_max,
-            'ci' => $ci,
+            'lambda_max' => round($lambda_max, 10),
+            'ci' => round($ci, 10),
             'ri' => $ri,
-            'cr' => $cr,
+            'cr' => round($cr, 10),
             'status' => $status,
         ]);
 
@@ -339,9 +341,104 @@ class PerhitunganController extends Controller
         ]);
     }
 
+    //Poses Hitung Normalisasi Snorm De Boer
     function snorm()
     {
-        return view('admin/snorm');
+        // Cek apakah sudah pernah dihitung
+        $hasil = KinerjaIndikator::latest()->first();
+
+        return view('admin/snorm', [
+            'hasil' => $hasil
+        ]);
+    }
+
+    public function Snormgenerate()
+    {
+        //Ambil Semua KPI
+        $kpis = KPI::orderByRaw("FIELD(variabel, 'Plan', 'Source', 'Make', 'Deliver', 'Return')")
+            ->orderBy('id')
+            ->get();
+
+        if ($kpis->isEmpty()) {
+            return redirect()->back()->with('error', 'Data KPI belum tersedia.');
+        }
+
+        //Ambil Bobot Prioritas
+        $bobot = DB::table('bobot_prioritas')->pluck('bobot_prioritas', 'indikator_id')->toArray();
+
+        if (empty($bobot)) {
+            return redirect()->back()->with('error', 'Bobot prioritas belum dihitung.');
+        }
+
+        //Inisialisasi Array untuk Nilai Kinerja
+        $nilaiKinerjaArray = [];
+
+        foreach ($kpis as $kpi) {
+            // Ambil rata-rata skor kuesioner
+            $skorRataRata = DB::table('kpi')
+                ->where('id', $kpi->id)
+                ->value('skor');
+
+            if ($skorRataRata === null) {
+                return redirect()->back()->with('error', "Skor rata-rata untuk indikator {$kpi->id} belum tersedia.");
+            }
+
+            // Ambil bobot prioritas
+            $bobotPrioritas = $bobot[$kpi->id] ?? 0;
+
+            if ($bobotPrioritas == 0) {
+                return redirect()->back()->with('error', "Bobot prioritas untuk indikator {$kpi->id} belum tersedia atau bernilai nol.");
+            }
+
+            // Hitung nilai kinerja
+            $nilaiKinerja = $skorRataRata * $bobotPrioritas;
+
+            // Simpan sementara
+            $nilaiKinerjaArray[] = [
+                'kpi_id' => $kpi->id,
+                'nilai_kinerja' => $nilaiKinerja,
+            ];
+        }
+
+        // Hitung min dan max nilai kinerja
+        $nilaiKinerjaValues = array_column($nilaiKinerjaArray, 'nilai_kinerja');
+        $minNilai = min($nilaiKinerjaValues);
+        $maxNilai = max($nilaiKinerjaValues);
+
+        if ($maxNilai == $minNilai) {
+            return redirect()->back()->with('error', 'Nilai maksimum dan minimum sama, Snorm De Boer tidak bisa dihitung.');
+        }
+
+        // Bersihkan tabel lama
+        KinerjaIndikator::truncate();
+
+        // Simpan ke database
+        foreach ($nilaiKinerjaArray as $item) {
+            // Rumus Snorm De Boer
+            $epsilon = 0.0001;
+            $snorm = (($item['nilai_kinerja'] - $minNilai + $epsilon) / ($maxNilai - $minNilai + $epsilon)) * 100;
+
+            KinerjaIndikator::create([
+                'kpi_id' => $item['kpi_id'],
+                'nilai_kinerja' => $item['nilai_kinerja'],
+                'snorm_de_boer' => $snorm,
+            ]);
+        }
+
+        return redirect()->route('snorm.show')->with('success', 'Perhitungan Nilai Kinerja dan Normalisasi Snorm De Boer Berhasil.');
+    }
+
+    public function showSnorm()
+    {
+        $hasil = KinerjaIndikator::query()
+            ->select('kinerja_indikator.*')
+            ->join('kpi', 'kpi.id', '=', 'kinerja_indikator.kpi_id')
+            ->orderByRaw("FIELD(kpi.variabel, 'Plan', 'Source', 'Make', 'Deliver', 'Return')")
+            ->orderBy('kpi.id')
+            ->with('kpi')
+            ->get();
+
+        return view('admin/snorm', compact('hasil'));
     }
 
     function nilaiAkhir()

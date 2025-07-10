@@ -29,11 +29,11 @@
                     <tbody>
                         <tr>
                             <th class="text-center" style="width: 50%;">Lambda Max</th>
-                            <td class="text-center">{{ number_format($hasil->lambda_max, 4) }}</td>
+                            <td class="text-center">{{ number_format($hasil->lambda_max, 2) }}</td>
                         </tr>
                         <tr>
                             <th class="text-center">Consistency Index (CI)</th>
-                            <td class="text-center">{{ number_format($hasil->ci, 4) }}</td>
+                            <td class="text-center">{{ number_format($hasil->ci, 2) }}</td>
                         </tr>
                         <tr>
                             <th class="text-center">Random Index (RI)</th>
@@ -41,7 +41,7 @@
                         </tr>
                         <tr>
                             <th class="text-center">Consistency Ratio (CR)</th>
-                            <td class="text-center">{{ number_format($hasil->cr, 4) }}</td>
+                            <td class="text-center">{{ number_format($hasil->cr, 2) }}</td>
                         </tr>
                         <tr>
                             <th class="text-center">Status</th>
