@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
     //Kelola Data SCOR
     Route::get('Kelola-Data-SCOR', [SCORController::class, 'index'])->name('scor');
     Route::post('Tambah-Data-SCOR', [SCORController::class, 'storeScor'])->name('scor.store');
-    Route::post('Edit-Data-SCOR/{id}/update', [SCORController::class, 'updateScor'])->name('scor.update');
+    Route::put('Edit-Data-SCOR/{id}/update', [SCORController::class, 'updateScor'])->name('scor.update');
     Route::delete('Delete-Data-SCOR/{id}', [SCORController::class, 'deleteScor'])->name('scor.delete');
 
     //Kelola Data GSCOR
@@ -70,7 +70,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('Kelola-Data-KPI', [KPIController::class, 'index'])->name('kpi');
     Route::post('Tambah-Data-KPI', [KPIController::class, 'storeSelected'])->name('kpi.storeSelected');
     // Input skor kuesioner dan otomatis menampilkan skor rata-rata
-    Route::post('/kpi/update-skor/{id}', [KPIController::class, 'updateSkor'])->name('kpi.updateSkor');
+    Route::post('/kpi/update-skor/{id}', [KPIController::class, 'updateKpi'])->name('kpi.updateKpi');
     Route::delete('Delete-Data-KPI/{id}', [KPIController::class, 'deleteKpi'])->name('kpi.delete');
 
     //Kelola Perhitungan

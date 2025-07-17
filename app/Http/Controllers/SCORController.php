@@ -20,6 +20,7 @@ class SCORController extends Controller
             'atribut' => 'required|string|in:Reliability,Responsiveness,Agility,Sustainability,Cost,Asset Management',
             'indikator' => 'required|string|min:3',
             'keterangan' => 'nullable|string',
+            'rekomendasi_bawaan' => 'nullable|string',
         ]);
 
         SCOR::create([
@@ -27,6 +28,7 @@ class SCORController extends Controller
             'atribut' => $request->atribut,
             'indikator' => $request->indikator,
             'keterangan' => $request->keterangan,
+            'rekomendasi_bawaan' => $request->rekomendasi_bawaan,
         ]);
 
         return redirect()->route('scor')->with('success', 'Data berhasil ditambahkan.');
@@ -39,6 +41,7 @@ class SCORController extends Controller
             'atribut' => 'required|string|in:Reliability,Responsiveness,Sustainability,Flexibility,Cost,Asset Management',
             'indikator' => 'required|string|min:3',
             'keterangan' => 'nullable|string',
+            'rekomendasi_bawaan' => 'nullable|string',
         ]);
 
         $data = SCOR::findOrFail($id);
@@ -47,6 +50,7 @@ class SCORController extends Controller
             'atribut' => $request->atribut,
             'indikator' => $request->indikator,
             'keterangan' => $request->keterangan,
+            'rekomendasi_bawaan' => $request->rekomendasi_bawaan,
         ]);
 
         return redirect()->route('scor')->with('success', 'Data berhasil diperbarui.');

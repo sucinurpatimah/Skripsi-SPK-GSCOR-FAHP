@@ -11,6 +11,7 @@ class SCOR extends Model
         'atribut',
         'indikator',
         'keterangan',
+        'rekomendasi_bawaan'
     ];
 
     protected $table = 'scor';

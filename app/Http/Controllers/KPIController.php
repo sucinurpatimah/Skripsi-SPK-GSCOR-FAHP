@@ -44,7 +44,7 @@ class KPIController extends Controller
         return redirect()->route('kpi')->with('success', 'Data KPI Berhasil Ditambahkan.');
     }
 
-    public function updateSkor(Request $request, $id)
+    public function updateKpi(Request $request, $id)
     {
         $skor = array_filter($request->input('skor'), function ($value) {
             return $value !== null && $value !== ''; // hanya ambil yang diisi

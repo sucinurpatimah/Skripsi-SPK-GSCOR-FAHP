@@ -37,9 +37,9 @@
                             <tr>
                                 <td class="text-center">{{ $item->variabel }}</td>
                                 <td class="text-center">{{ $item->atribut }}</td>
-                                <td class="text-center" style="width: 200px;">{{ $item->indikator }}</td>
+                                <td class="text-center" style="width: 100px;">{{ $item->indikator }}</td>
                                 <td
-                                    style="max-width: 300px; text-align: justify; white-space: normal; word-wrap: break-word;">
+                                    style="max-width: 200px; text-align: justify; white-space: normal; word-wrap: break-word;">
                                     {{ $item->keterangan }}
                                 </td>
                                 <td class="text-center">{{ $item->kategori }}</td>
@@ -67,7 +67,7 @@
                                 aria-labelledby="modalSkorLabel{{ $item->id }}" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <form action="{{ route('kpi.updateSkor', $item->id) }}" method="POST">
+                                        <form action="{{ route('kpi.updateKpi', $item->id) }}" method="POST">
                                             @csrf
                                             <div class="modal-header bg-dark text-white">
                                                 <h5 class="modal-title">Input Skor Kuesioner</h5>
