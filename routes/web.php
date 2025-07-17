@@ -92,7 +92,7 @@ Route::middleware(['auth'])->group(function () {
     //Proses perhitungan nilai akhir scm
     Route::get('Nilai-Akhir-SCM', [PerhitunganController::class, 'nilaiAkhir'])->name('perhitungan.nilai-akhir');
     Route::post('Nilai-Akhir-SCM/generate', [PerhitunganController::class, 'generateNilaiAkhir'])->name('nilai-akhir-scm.generate');
-    Route::put('nilai-akhir-scm/{id}/rekomendasi', [PerhitunganController::class, 'updateRekomendasi'])->name('nilai-akhir-scm.rekomendasi');
+    // Route::put('nilai-akhir-scm/{id}/rekomendasi', [PerhitunganController::class, 'updateRekomendasi'])->name('nilai-akhir-scm.rekomendasi');
 
     //Manager
     Route::get('/manager', [ManagerController::class, 'index'])->name('dashboard.manager');

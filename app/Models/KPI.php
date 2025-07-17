@@ -29,4 +29,16 @@ class KPI extends Model
     {
         return $this->hasOne(KinerjaIndikator::class, 'kpi_id');
     }
+
+    //Relasi dengan tabel SCOR
+    public function scor()
+    {
+        return $this->hasOne(SCOR::class, 'indikator', 'indikator');
+    }
+
+    //Relasi dengan tabel GSCOR
+    public function gscor()
+    {
+        return $this->hasOne(GSCOR::class, 'indikator', 'indikator');
+    }
 }

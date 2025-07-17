@@ -20,16 +20,14 @@
                         <th class="text-center">Snorm de Boer</th>
                         <th class="text-center">Nilai Akhir SCM</th>
                         <th class="text-center align-middle">Rekomendasi</th>
-                        <th class="text-center align-middle">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($hasil as $i => $item)
+                    @foreach ($hasil as $item)
                         @php
-                            // Tentukan warna dan status
                             $warnaSnorm = '';
                             $statusSnorm = '';
-                            $tampilkanTombol = false;
+                            $rekomendasiBawaan = '-';
 
                             if ($item->snorm >= 80) {
                                 $warnaSnorm = 'bg-success text-white';
@@ -37,77 +35,37 @@
                             } elseif ($item->snorm >= 60) {
                                 $warnaSnorm = 'bg-warning';
                                 $statusSnorm = 'Butuh perhatian';
-                                $tampilkanTombol = true;
                             } else {
                                 $warnaSnorm = 'bg-danger text-white';
                                 $statusSnorm = 'Perlu tindakan segera';
-                                $tampilkanTombol = true;
+                            }
+
+                            // Cek apakah KPI dan relasinya ada
+                            if ($item->kpi) {
+                                if ($item->kpi->scor && $item->kpi->scor->rekomendasi_bawaan) {
+                                    $rekomendasiBawaan = $item->kpi->scor->rekomendasi_bawaan;
+                                } elseif ($item->kpi->gscor && $item->kpi->gscor->rekomendasi_bawaan) {
+                                    $rekomendasiBawaan = $item->kpi->gscor->rekomendasi_bawaan;
+                                }
                             }
                         @endphp
+
                         <tr>
                             <td class="text-center">{{ optional($item->kpi)->variabel ?? '-' }}</td>
                             <td class="text-center">{{ optional($item->kpi)->indikator ?? '-' }}</td>
                             <td class="text-center">{{ number_format($item->bobot_prioritas, 4) }}</td>
                             <td class="text-center {{ $warnaSnorm }}">{{ number_format($item->snorm, 2) }}</td>
                             <td class="text-center">{{ number_format($item->nilai_akhir, 2) }}</td>
-                            <td class="text-center">
+                            <td class="text-center" style="width: 250px;">
                                 <div class="small mb-1">{{ $statusSnorm }}</div>
-                                @if ($item->rekomendasi)
-                                    <div class="mt-1">{{ $item->rekomendasi }}</div>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if ($item->nilai_akhir >= 8 || $item->snorm >= 80)
-                                    <span class="text-success">
-                                        <i class="fas fa-check-circle"></i> OK
-                                    </span>
-                                @elseif ($tampilkanTombol)
-                                    <button type="button"
-                                        class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1 py-1 px-2"
-                                        data-bs-toggle="modal" data-bs-target="#modalRekomendasi{{ $item->id }}">
-                                        <i class="fas fa-edit"></i>
-                                        <span>Rekomendasi</span>
-                                    </button>
-                                @else
-                                    <span class="text-muted">-</span>
+
+                                @if ($item->snorm < 70 && $rekomendasiBawaan !== '-')
+                                    <div class="mt-1 text-muted small" style="text-align: justify; font-size: 14px;">
+                                        {{ $rekomendasiBawaan }}
+                                    </div>
                                 @endif
                             </td>
                         </tr>
-
-                        {{-- Modal Tambah/Edit Rekomendasi --}}
-                        <div class="modal fade" id="modalRekomendasi{{ $item->id }}" tabindex="-1"
-                            aria-labelledby="modalLabel{{ $item->id }}" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <form action="" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="modalLabel{{ $item->id }}">Rekomendasi untuk
-                                                Indikator</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="mb-3">
-                                                <label class="form-label">Indikator</label>
-                                                <input type="text" class="form-control"
-                                                    value="{{ optional($item->kpi)->indikator ?? '-' }}" readonly>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Rekomendasi</label>
-                                                <textarea name="rekomendasi" class="form-control" rows="4">{{ $item->rekomendasi }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Tutup</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                     @endforeach
                     <tr class="fw-bold table-primary">
                         <td class="text-center" colspan="5">TOTAL NILAI AKHIR SCM</td>

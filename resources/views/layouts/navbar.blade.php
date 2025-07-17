@@ -1,6 +1,6 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand -->
-    <a class="navbar-brand ps-3">PT. Arteria Daya Mulia</a>
+    <a class="navbar-brand ps-3 fw-bold">PT. ARIDA</a>
 
     <!-- Sidebar Toggle (untuk layar kecil) -->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#">

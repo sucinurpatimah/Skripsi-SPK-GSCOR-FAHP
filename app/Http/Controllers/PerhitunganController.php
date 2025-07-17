@@ -445,7 +445,7 @@ class PerhitunganController extends Controller
     //Proses Perhitunngan Nilai Akhir SCM
     function nilaiAkhir()
     {
-        $hasil = NilaiAkhirSCM::with('kpi')
+        $hasil = NilaiAkhirSCM::with('kpi.scor', 'kpi.gscor')
             ->join('kpi', 'nilai_akhir_scm.indikator_id', '=', 'kpi.id')
             ->orderByRaw("FIELD(kpi.variabel, 'Plan', 'Source', 'Make', 'Deliver', 'Return')")
             ->select('nilai_akhir_scm.*')
@@ -457,7 +457,7 @@ class PerhitunganController extends Controller
 
     public function generateNilaiAkhir()
     {
-        $indikator = KPI::with(['bobotPrioritas', 'kinerjaIndikator'])->get();
+        $indikator = KPI::with(['bobotPrioritas', 'kinerjaIndikator', 'scor', 'greenscor'])->get();
 
         foreach ($indikator as $item) {
             if (!$item->bobotPrioritas || !$item->kinerjaIndikator) {
@@ -481,16 +481,16 @@ class PerhitunganController extends Controller
         return redirect()->route('perhitungan.nilai-akhir')->with('success', 'Nilai Akhir SCM berhasil dihitung.');
     }
 
-    public function updateRekomendasi(Request $request, $id)
-    {
-        $request->validate([
-            'rekomendasi' => 'nullable|string'
-        ]);
+    // public function updateRekomendasi(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'rekomendasi' => 'nullable|string'
+    //     ]);
 
-        $item = NilaiAkhirSCM::findOrFail($id);
-        $item->rekomendasi = $request->rekomendasi;
-        $item->save();
+    //     $item = NilaiAkhirSCM::findOrFail($id);
+    //     $item->rekomendasi = $request->rekomendasi;
+    //     $item->save();
 
-        return redirect()->route('perhitungan.nilai-akhir')->with('success', 'Rekomendasi berhasil diperbarui.');
-    }
+    //     return redirect()->route('perhitungan.nilai-akhir')->with('success', 'Rekomendasi berhasil diperbarui.');
+    // }
 }

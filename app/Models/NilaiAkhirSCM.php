@@ -18,6 +18,6 @@ class NilaiAkhirSCM extends Model
 
     public function kpi()
     {
-        return $this->belongsTo(KPI::class, 'indikator_id');
+        return $this->belongsTo(KPI::class, 'indikator_id', 'id');
     }
 }
