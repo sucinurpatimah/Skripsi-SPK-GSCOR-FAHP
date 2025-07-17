@@ -17,57 +17,64 @@
         </button>
     </div>
 
-    <form action="{{ route('kpi.storeSelected') }}" method="POST">
-        @csrf
-        <div class="card mt-3">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-bordered mb-0">
-                        <thead class="table-light">
+    <div class="card mt-3">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-bordered mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center" style="width: 40px;">Opsi</th>
+                            <th class="text-center">Variabel</th>
+                            <th class="text-center">Atribut</th>
+                            <th class="text-center">Indikator</th>
+                            <th class="text-center">Keterangan</th>
+                            <th class="text-center">Rekomendasi</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($dataGscor as $item)
                             <tr>
-                                <th class="text-center" style="width: 40px;">Opsi</th>
-                                <th class="text-center">Variabel</th>
-                                <th class="text-center">Atribut</th>
-                                <th class="text-center">Indikator</th>
-                                <th class="text-center">Keterangan</th>
-                                <th class="text-center">Aksi</th>
+                                <td class="text-center">
+                                    <input type="checkbox" name="selected[]" value="{{ $item->id }}">
+                                    <input type="hidden" name="kategori[{{ $item->id }}]" value="Green SCOR">
+                                </td>
+                                <td class="text-center">{{ $item->variabel }}</td>
+                                <td class="text-center" style="width: 150px;">{{ $item->atribut }}</td>
+                                <td class="text-center" style="width: 150px;">{{ $item->indikator }}</td>
+                                <td
+                                    style="max-width: 200px; white-space: normal; word-wrap: break-word; text-align: justify;">
+                                    {{ $item->keterangan }}
+                                </td>
+                                <td
+                                    style="max-width: 200px; white-space: normal; word-wrap: break-word; text-align: justify;">
+                                    {{ $item->rekomendasi_bawaan }}
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#modalEdit{{ $item->id }}" type="button">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-danger"
+                                        onclick="event.preventDefault(); if(confirm('Apakah anda yakin ingin menghapus data ini?')) document.getElementById('delete-form-{{ $item->id }}').submit();">
+                                        <i class="fas fa-trash-alt"></i> Hapus
+                                    </button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($dataGscor as $item)
-                                <tr>
-                                    <td class="text-center">
-                                        <input type="checkbox" name="selected[]" value="{{ $item->id }}">
-                                        <input type="hidden" name="kategori[{{ $item->id }}]" value="Green SCOR">
-                                    </td>
-                                    <td class="text-center">{{ $item->variabel }}</td>
-                                    <td class="text-center" style="width: 150px;">{{ $item->atribut }}</td>
-                                    <td class="text-center" style="width: 250px;">{{ $item->indikator }}</td>
-                                    <td
-                                        style="max-width: 300px; white-space: normal; word-wrap: break-word; text-align: justify;">
-                                        {{ $item->keterangan }}
-                                    </td>
-                                    <td class="text-center">
-                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#modalEdit{{ $item->id }}" type="button">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-danger"
-                                            onclick="event.preventDefault(); if(confirm('Apakah anda yakin ingin menghapus data ini?')) document.getElementById('delete-form-{{ $item->id }}').submit();">
-                                            <i class="fas fa-trash-alt"></i> Hapus
-                                        </button>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="text-center text-muted">Belum ada data Green SCOR.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">Belum ada data Green SCOR.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
+
+    {{-- Form terpisah untuk tombol “Pilih” --}}
+    <form id="pilihForm" action="{{ route('kpi.storeSelected') }}" method="POST">
+        @csrf
         <div class="text-center mt-3 mb-4">
             <button type="submit" class="btn btn-dark">Pilih</button>
         </div>
@@ -129,6 +136,11 @@
                                 <label for="keterangan" class="form-label">Keterangan</label>
                                 <textarea name="keterangan" id="keterangan" rows="3" class="form-control"
                                     placeholder="Tulis Keterangan Disini" required></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="rekomendasi_bawaan" class="form-label">Rekomendasi</label>
+                                <textarea name="rekomendasi_bawaan" id="rekomendasi_bawaan" rows="3" class="form-control"
+                                    placeholder="Tulis Rekomendasi Disini" required></textarea>
                             </div>
                         </div>
                     </div>
@@ -210,6 +222,12 @@
                                 <div class="col-md-12">
                                     <label for="keterangan{{ $item->id }}" class="form-label">Keterangan</label>
                                     <textarea name="keterangan" id="keterangan{{ $item->id }}" rows="3" class="form-control" required>{{ $item->keterangan }}</textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="rekomendasi_bawaan{{ $item->id }}"
+                                        class="form-label">Rekomendasi</label>
+                                    <textarea name="rekomendasi_bawaan" id="rekomendasi_bawaan{{ $item->id }}" rows="3" class="form-control"
+                                        required>{{ $item->rekomendasi_bawaan }}</textarea>
                                 </div>
                             </div>
                         </div>

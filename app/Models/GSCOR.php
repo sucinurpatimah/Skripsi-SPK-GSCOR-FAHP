@@ -12,5 +12,6 @@ class GSCOR extends Model
         'atribut',
         'indikator',
         'keterangan',
+        'rekomendasi_bawaan',
     ];
 }
