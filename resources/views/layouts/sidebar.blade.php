@@ -99,6 +99,11 @@
                             </a>
                         </nav>
                     </div>
+                    <a class="nav-link mb-3 {{ request()->routeIs('riwayat.index') ? 'active' : '' }}"
+                        href="{{ route('riwayat.index') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-history"></i></div>
+                        Riwayat Perhitungan
+                    </a>
 
 
                     {{-- Jika manager --}}

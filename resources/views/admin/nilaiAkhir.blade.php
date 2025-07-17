@@ -80,4 +80,12 @@
         </div>
     @endif
 
+    <div class="d-flex justify-content-center mt-4">
+        <form action="{{ route('riwayat.store') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-dark">Selesai</button>
+        </form>
+    </div>
+
+
 @endsection

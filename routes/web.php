@@ -5,6 +5,7 @@ use App\Http\Controllers\GSCORController;
 use App\Http\Controllers\KPIController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\PerhitunganController;
+use App\Http\Controllers\RiwayatPerhitunganController;
 use App\Http\Controllers\SCMController;
 use App\Http\Controllers\SCORController;
 use App\Http\Controllers\SesiController;
@@ -93,6 +94,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('Nilai-Akhir-SCM', [PerhitunganController::class, 'nilaiAkhir'])->name('perhitungan.nilai-akhir');
     Route::post('Nilai-Akhir-SCM/generate', [PerhitunganController::class, 'generateNilaiAkhir'])->name('nilai-akhir-scm.generate');
     // Route::put('nilai-akhir-scm/{id}/rekomendasi', [PerhitunganController::class, 'updateRekomendasi'])->name('nilai-akhir-scm.rekomendasi');
+
+    //Route Riwayat Perhitungan
+    Route::resource('riwayat', RiwayatPerhitunganController::class)->only([
+        'index',
+        'store',
+        'destroy',
+        'show'
+    ]);
 
     //Manager
     Route::get('/manager', [ManagerController::class, 'index'])->name('dashboard.manager');
