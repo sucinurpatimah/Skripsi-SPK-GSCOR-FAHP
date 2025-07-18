@@ -5,7 +5,6 @@
 
 @section('content')
     <div class="container mt-4">
-
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -19,7 +18,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($riwayats as $i => $riwayat)
+                    @forelse ($riwayats as $riwayat)
                         <tr>
                             <td>{{ $riwayat->judul }}</td>
                             <td>
@@ -40,7 +39,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3">Belum ada riwayat perhitungan.</td>
+                            <td colspan="2">Belum ada riwayat perhitungan.</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -62,16 +61,20 @@
                     </div>
 
                     <div class="modal-body" id="laporan{{ $riwayat->id }}">
+                        <!-- TABEL UTAMA -->
+                        <h5 class="text-center mt-2 mb-4">
+                            Laporan Pengukuran Kinerja Rantai Pasok Proses Produksi Tambang PT. Arteria Daya Mulia
+                        </h5>
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead class="table-secondary">
                                     <tr>
-                                        <th>Variabel</th>
-                                        <th>Atribut</th>
-                                        <th>Indikator</th>
-                                        <th>Bobot Prioritas</th>
-                                        <th>Snorm De Boer</th>
-                                        <th>Nilai Akhir SCM</th>
+                                        <th class="text-center">Variabel</th>
+                                        <th class="text-center">Atribut</th>
+                                        <th class="text-center">Indikator</th>
+                                        <th class="text-center">Bobot Prioritas</th>
+                                        <th class="text-center">Snorm De Boer</th>
+                                        <th class="text-center">Nilai Akhir SCM</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -93,41 +96,50 @@
                             </table>
                         </div>
 
+                        <!-- REKOMENDASI UMUM -->
+                        <div class="mt-2">
+                            <p><strong>Rekomendasi:</strong> {{ $riwayat->rekomendasi }} Lakukan Perbaikan Untuk Indikator
+                                Dibawah Ini.</p>
+                        </div>
+
+                        <!-- TABEL REKOMENDASI PERBAIKAN PER INDIKATOR -->
                         <div class="mt-4">
-                            <p><strong>Rekomendasi:</strong> {{ $riwayat->rekomendasi }}</p>
+                            <div class="table-responsive">
+                                <table class="table table-bordered align-middle text-center">
+                                    <thead class="table-secondary">
+                                        <tr>
+                                            <th style="width: 40%;">Indikator Kinerja</th>
+                                            <th>Rekomendasi Perbaikan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($riwayat->rekomendasi_indikator ?? [] as $item)
+                                            <tr>
+                                                <td class="text-start">{{ $item['indikator'] }}</td>
+                                                <td class="text-start" style="text-align: justify;">
+                                                    {{ $item['rekomendasi'] }}</td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="3" class="text-muted text-center py-4">
+                                                    <em>Tidak ada indikator dengan nilai akhir di bawah 70.</em>
+                                                </td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-primary" onclick="printModal('laporan{{ $riwayat->id }}')">
-                            Cetak Laporan
-                        </button>
+                        <a href="{{ route('riwayat.cetak', $riwayat->id) }}" class="btn btn-dark" target="_blank">
+                            Cetak
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     @endforeach
-
 @endsection
-
-@push('scripts')
-    <script>
-        function printModal(id) {
-            const content = document.getElementById(id).innerHTML;
-            const win = window.open('', '_blank');
-            win.document.write(`
-            <html>
-                <head>
-                    <title>Cetak Laporan</title>
-                    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-                </head>
-                <body onload="window.print(); window.close();">
-                    ${content}
-                </body>
-            </html>
-        `);
-            win.document.close();
-        }
-    </script>
-@endpush

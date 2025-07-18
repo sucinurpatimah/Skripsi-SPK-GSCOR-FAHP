@@ -165,6 +165,7 @@
                 <div class="modal-content border-0 shadow">
                     <form action="{{ route('gscor.update', $item->id) }}" method="POST">
                         @csrf
+                        @method('PUT')
                         <div class="modal-header bg-dark text-white">
                             <h5 class="modal-title" id="modalEditLabel{{ $item->id }}">
                                 <i></i> Edit Data Green SCOR

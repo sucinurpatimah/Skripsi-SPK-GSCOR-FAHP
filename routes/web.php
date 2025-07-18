@@ -64,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
     //Kelola Data GSCOR
     Route::get('Kelola-Data-GreenSCOR', [GSCORController::class, 'index'])->name('gscor');
     Route::post('Tambah-Data-GreenSCOR', [GSCORController::class, 'storeGscor'])->name('gscor.store');
-    Route::post('Edit-Data-GreenSCOR/{id}/update', [GSCORController::class, 'updateGscor'])->name('gscor.update');
+    Route::put('Edit-Data-GreenSCOR/{id}/update', [GSCORController::class, 'updateGscor'])->name('gscor.update');
     Route::delete('Delete-Data-GreenSCOR/{id}', [GSCORController::class, 'deleteGscor'])->name('gscor.delete');
 
     //Kelola Data KPI
@@ -102,6 +102,7 @@ Route::middleware(['auth'])->group(function () {
         'destroy',
         'show'
     ]);
+    Route::get('/riwayat/cetak/{id}', [RiwayatPerhitunganController::class, 'cetakPDF'])->name('riwayat.cetak');
 
     //Manager
     Route::get('/manager', [ManagerController::class, 'index'])->name('dashboard.manager');

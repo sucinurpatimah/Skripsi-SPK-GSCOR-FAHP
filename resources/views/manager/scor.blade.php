@@ -15,6 +15,7 @@
                             <th class="text-center">Atribut</th>
                             <th class="text-center">Indikator</th>
                             <th class="text-center">Keterangan</th>
+                            <th class="text-center">Rekomendasi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,12 +23,16 @@
                             <tr>
                                 <td class="text-center">{{ $item->variabel }}</td>
                                 <td class="text-center" style="width: 150px;">{{ $item->atribut }}</td>
-                                <td class="text-center" style="width: 250px;">
+                                <td class="text-center" style="width: 150px;">
                                     {{ $item->indikator }}
                                 </td>
                                 <td
                                     style="max-width: 300px; white-space: normal; word-wrap: break-word; text-align: justify;">
                                     {{ $item->keterangan }}
+                                </td>
+                                <td
+                                    style="max-width: 300px; white-space: normal; word-wrap: break-word; text-align: justify;">
+                                    {{ $item->rekomendasi_bawaan }}
                                 </td>
                             </tr>
                         @empty
