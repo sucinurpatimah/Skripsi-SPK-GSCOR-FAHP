@@ -12,7 +12,7 @@
     @if ($hasil->count())
         <div class="table-responsive">
             <table class="table table-bordered align-middle mt-3">
-                <thead>
+                <thead class="bg-dark text-white">
                     <tr>
                         <th class="text-center align-middle">Variabel</th>
                         <th class="text-center align-middle">Indikator</th>
@@ -67,7 +67,7 @@
                             </td>
                         </tr>
                     @endforeach
-                    <tr class="fw-bold table-primary">
+                    <tr class="fw-bold table-secondary">
                         <td class="text-center" colspan="5">TOTAL NILAI AKHIR SCM</td>
                         <td class="text-center" colspan="2">{{ number_format($total, 2) }}</td>
                     </tr>

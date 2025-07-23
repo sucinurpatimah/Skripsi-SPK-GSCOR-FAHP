@@ -9,7 +9,7 @@
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-bordered mb-0">
-                    <thead class="table-light">
+                    <thead class="bg-dark text-white">
                         <tr>
                             <th class="text-center">Bahan Baku</th>
                             <th class="text-center">Pewarna</th>

@@ -6,7 +6,7 @@
 @section('content')
     <div class="table-responsive mt-3">
         <table class="table table-bordered text-center align-middle" style="width: 100%;">
-            <thead class="table-light">
+            <thead class="bg-dark text-white">
                 <tr>
                     <th style="width: 80%;">Judul</th>
                     <th style="width: 20%;">Aksi</th>
@@ -20,7 +20,7 @@
                             <!-- Tombol Detail -->
                             <button class="btn btn-info btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modalDetail{{ $riwayat->id }}">
-                                Detail
+                                <i class="bi bi-info-circle-fill"></i> Detail
                             </button>
                         </td>
                     </tr>

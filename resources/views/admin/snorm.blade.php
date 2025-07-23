@@ -26,7 +26,7 @@
             <h4 class="fw-bold text-center mb-3">Tabel Nilai Kinerja dan Snorm De Boer</h4>
             <div class="table-responsive">
                 <table class="table table-bordered align-middle">
-                    <thead class="table-light">
+                    <thead class="bg-dark text-white">
                         <tr>
                             <th class="text-center">Variabel</th>
                             <th class="text-center">Atribut</th>

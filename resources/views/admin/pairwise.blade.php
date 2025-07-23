@@ -14,7 +14,7 @@
         <h4 class="fw-bold text-center mb-3">Matriks Perbandingan Berpasangan</h4>
         <div class="table-responsive">
             <table class="table table-bordered align-middle">
-                <thead class="table-light">
+                <thead class="bg-dark text-white">
                     <tr>
                         <th class="text-center">Indikator</th>
                         @foreach ($labels as $id => $label)
@@ -25,7 +25,7 @@
                 <tbody>
                     @foreach ($values as $indikatorId => $row)
                         <tr>
-                            <th class="text-center">{{ $labels[$indikatorId] ?? '-' }}</th>
+                            <th class="text-center bg-dark text-white">{{ $labels[$indikatorId] ?? '-' }}</th>
                             @foreach ($row as $v)
                                 <td class="text-center">{{ is_numeric($v) ? number_format($v, 2) : '-' }}</td>
                             @endforeach
@@ -58,19 +58,19 @@
             <h4 class="fw-bold text-center mb-3">Hasil Normalisasi Matriks Perbandingan Berpasangan</h4>
             <div class="table-responsive">
                 <table class="table table-bordered align-middle mb-0">
-                    <thead class="table-light">
+                    <thead class="bg-dark text-white">
                         <tr>
-                            <th class="text-center">Indikator</th>
+                            <th class="text-center align-middle">Indikator</th>
                             @foreach ($labels as $id => $label)
-                                <th class="text-center">{{ $label }}</th>
+                                <th class="text-center align-middle">{{ $label }}</th>
                             @endforeach
-                            <th class="text-center">Bobot Prioritas</th>
+                            <th class="text-center align-middle">Bobot Prioritas</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($normalized as $indikatorId => $row)
                             <tr>
-                                <th class="text-center">{{ $labels[$indikatorId] ?? '-' }}</th>
+                                <th class="text-center bg-dark text-white">{{ $labels[$indikatorId] ?? '-' }}</th>
                                 @foreach ($row as $v)
                                     <td class="text-center">
                                         {{ is_numeric($v) ? number_format($v, 4) : '-' }}

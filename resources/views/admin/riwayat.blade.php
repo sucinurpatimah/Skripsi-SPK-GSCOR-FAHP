@@ -11,7 +11,7 @@
 
         <div class="table-responsive">
             <table class="table table-bordered text-center align-middle">
-                <thead class="table-light">
+                <thead class="bg-dark text-white">
                     <tr>
                         <th>Judul</th>
                         <th width="20%">Aksi</th>
