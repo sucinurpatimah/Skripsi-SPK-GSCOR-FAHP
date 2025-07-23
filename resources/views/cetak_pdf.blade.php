@@ -165,6 +165,30 @@
     @else
         <p><em>Tidak ada indikator dengan nilai akhir di bawah 70.</em></p>
     @endif
+
+    @php
+        use App\Models\User;
+        use Carbon\Carbon;
+
+        Carbon::setLocale('id'); // Set bahasa ke Indonesia
+        $manager = User::where('role', 'manager')->first();
+    @endphp
+
+    @if ($manager)
+        <table style="width: 100%; margin-top: 60px; border: none;">
+            <tr>
+                <td style="border: none; width: 60%;"></td>
+                <td style="border: none; text-align: right;">
+                    <div style="margin-bottom: 5px;">Cirebon, {{ Carbon::now()->translatedFormat('d F Y') }}</div>
+                    <div style="margin-bottom: 90px;">Manager Produksi Tambang</div>
+                    <div style="font-weight: bold; text-decoration: underline;">{{ $manager->name }}</div>
+                </td>
+            </tr>
+        </table>
+    @endif
+
+
+
     <!-- Footer -->
     <div class="footer">
         Dicetak pada: {{ \Carbon\Carbon::now()->format('d-m-Y H:i') }}
