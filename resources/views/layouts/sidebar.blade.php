@@ -43,10 +43,10 @@
                                 href="{{ route('distribusi') }}">
                                 <i class="fas fa-shipping-fast me-2"></i> Data Distribusi
                             </a>
-                            {{-- <a class="nav-link mb-2 {{ request()->routeIs('pengembalian') ? 'active' : '' }}"
+                            <a class="nav-link mb-2 {{ request()->routeIs('pengembalian') ? 'active' : '' }}"
                                 href="{{ route('pengembalian') }}">
                                 <i class="fas fa-undo-alt me-2"></i> Data Pengembalian
-                            </a> --}}
+                            </a>
                         </nav>
                     </div>
                     <a class="nav-link mb-3 {{ request()->routeIs('scor') ? 'active' : '' }}"
@@ -145,10 +145,10 @@
                                 href="{{ route('manager.distribusi') }}">
                                 <i class="fas fa-shipping-fast me-2"></i> Data Distribusi
                             </a>
-                            {{-- <a class="nav-link mb-2 {{ request()->routeIs('manager.pengembalian') ? 'active' : '' }}"
+                            <a class="nav-link mb-2 {{ request()->routeIs('manager.pengembalian') ? 'active' : '' }}"
                                 href="{{ route('manager.pengembalian') }}">
                                 <i class="fas fa-undo-alt me-2"></i> Data Pengembalian
-                            </a> --}}
+                            </a>
                         </nav>
                     </div>
 

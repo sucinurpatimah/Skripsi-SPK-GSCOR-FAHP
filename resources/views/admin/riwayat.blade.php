@@ -25,7 +25,7 @@
                                 <!-- Tombol Detail -->
                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modalDetail{{ $riwayat->id }}">
-                                    Detail
+                                    <i class="bi bi-info-circle-fill"></i> Detail
                                 </button>
 
                                 <!-- Tombol Hapus -->
@@ -33,7 +33,9 @@
                                     onsubmit="return confirm('Yakin ingin menghapus?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger btn-sm">Hapus</button>
+                                    <button class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i> Hapus
+                                    </button>
                                 </form>
                             </td>
                         </tr>

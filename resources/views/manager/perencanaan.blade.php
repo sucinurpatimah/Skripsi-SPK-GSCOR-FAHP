@@ -8,30 +8,45 @@
     <div class="card mt-3">
         <div class="card-body p-0">
             <div class="table-responsive">
+                @php
+                    $tahunSebelumnya = null;
+                @endphp
+
                 <table class="table table-bordered mb-0">
-                    <thead class="table-light">
+                    @forelse ($dataPerencanaan as $item)
+                        @if ($tahunSebelumnya !== $item->tahun)
+                            @if ($tahunSebelumnya !== null)
+                                </tbody>
+                            @endif
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th colspan="4" class="text-center">
+                                        Data Perencanaan Produksi Tambang Tahun {{ $item->tahun }}
+                                    </th>
+                                </tr>
+                                <tr class="table-secondary">
+                                    <th class="text-center">Bulan</th>
+                                    <th class="text-center">Permintaan</th>
+                                    <th class="text-center">Jumlah Pekerja</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $tahunSebelumnya = $item->tahun; @endphp
+                        @endif
                         <tr>
-                            <th class="text-center">Tahun</th>
-                            <th class="text-center">Bulan</th>
-                            <th class="text-center">Permintaan</th>
-                            <th class="text-center">Jumlah Pekerja</th>
+                            <td class="text-center">{{ $item->bulan }}</td>
+                            <td class="text-center">{{ number_format($item->permintaan, 0, ',', '.') }} Kg</td>
+                            <td class="text-center">{{ $item->jumlah_pekerja }} Orang</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($dataPerencanaan as $item)
+                    @empty
+                        <tbody>
                             <tr>
-                                <td class="text-center">{{ $item->tahun }}</td>
-                                <td class="text-center">{{ $item->bulan }}</td>
-                                <td class="text-center">{{ number_format($item->permintaan, 0, ',', '.') }} Kg</td>
-                                <td class="text-center">{{ $item->jumlah_pekerja }} Orang</td>
+                                <td colspan="4" class="text-center text-muted">Belum ada data perencanaan.</td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center text-muted">Belum ada data perencanaan.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
+                        </tbody>
+                    @endforelse
                 </table>
+
             </div>
         </div>
     </div>

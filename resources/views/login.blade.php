@@ -35,7 +35,8 @@
     @endif
 
     <div class="text-center mt-5 mb-4">
-        <h2 class="fw-bold text-uppercase">PT. Arteria Daya Mulia</h2>
+        <h2 class="fw-bold text-uppercase">SIPASOK ARIDA</h2>
+        <h5 class="fw-bold text-uppercase">(Sistem Informasi Pengukuran Kinerja Rantai Pasok) </h5>
     </div>
 
     <div class="mx-auto"

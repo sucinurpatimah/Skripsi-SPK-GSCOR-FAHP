@@ -8,7 +8,8 @@
 
     {{-- Grafik  --}}
     <div class="card mt-4 mb-4">
-        <div class="card-header bg-dark text-white fw-bold"><i class="fas fa-chart-area me-1"></i>Nilai Akhir SCM</div>
+        <div class="card-header bg-dark text-white fw-bold"><i class="fas fa-chart-area me-1"></i>Diagram Hasil Perhitungan
+            Pengukuran Kinerja</div>
         <div class="card-body">
             <canvas id="myAreaChart" width="100%" height="30"></canvas>
         </div>
@@ -63,7 +64,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Nilai Akhir SCM',
+                    label: 'Nilai Akhir Kinerja Rantai Pasok per-Indikator',
                     data: dataNilaiAkhir,
                     fill: false,
                     backgroundColor: 'rgba(54, 162, 235, 0.5)',
