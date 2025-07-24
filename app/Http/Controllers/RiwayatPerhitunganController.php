@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GSCOR;
 use App\Models\KPI;
 use App\Models\NilaiAkhirSCM;
 use App\Models\RiwayatPerhitungan;
+use App\Models\SCOR;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class RiwayatPerhitunganController extends Controller
 {
+
+    private function normalizeString($string)
+    {
+        return strtolower(trim(preg_replace('/\s+/', ' ', str_replace(
+            ['–', '’', '‘', '“', '”', '″', '′', '´', '‐', '‑'],
+            ['-', "'", "'", '"', '"', '"', "'", "'", '-', '-'],
+            $string
+        ))));
+    }
+
     public function index()
     {
         $riwayats = RiwayatPerhitungan::latest()->get();
@@ -94,8 +106,39 @@ class RiwayatPerhitunganController extends Controller
 
     public function show($id)
     {
-        $riwayat = RiwayatPerhitungan::findOrFail($id);
-        return response()->json($riwayat);
+        $riwayats = RiwayatPerhitungan::latest()->get();
+
+        $allScor = SCOR::all()->keyBy(function ($item) {
+            return $this->normalizeString($item->indikator);
+        });
+
+        $allGscor = GSCOR::all()->keyBy(function ($item) {
+            return $this->normalizeString($item->indikator);
+        });
+
+        foreach ($riwayats as $riwayat) {
+            $rekomendasiIndikator = [];
+
+            if ($riwayat->hasil_per_indikator) {
+                $hasil = json_decode($riwayat->hasil_per_indikator, true);
+
+                foreach ($hasil as $item) {
+                    if (isset($item['snorm_de_boer']) && $item['snorm_de_boer'] < 70) {
+                        $key = $this->normalizeString($item['indikator']);
+                        $sumber = $allScor[$key] ?? $allGscor[$key] ?? null;
+
+                        $rekomendasiIndikator[] = [
+                            'indikator' => $item['indikator'],
+                            'rekomendasi' => $sumber->rekomendasi_bawaan ?? '[Rekomendasi tidak ditemukan]',
+                        ];
+                    }
+                }
+            }
+
+            $riwayat->rekomendasi_indikator = $rekomendasiIndikator;
+        }
+
+        return view('riwayat.index', compact('riwayats'));
     }
 
     public function cetakPDF($id)

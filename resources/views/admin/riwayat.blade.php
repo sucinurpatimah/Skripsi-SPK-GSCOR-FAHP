@@ -9,6 +9,17 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
+        <div class="d-flex justify-content-end mb-3">
+            <form action="{{ route('perhitungan.reset') }}" method="POST"
+                onsubmit="return confirm('Yakin ingin menghapus semua hasil perhitungan sebelumnya?')">
+                @csrf
+                <button type="submit" class="btn btn-warning">
+                    <i class="fas fa-redo-alt"></i> Mulai Perhitungan Baru
+                </button>
+            </form>
+        </div>
+
+
         <div class="table-responsive">
             <table class="table table-bordered text-center align-middle">
                 <thead class="bg-dark text-white">
@@ -115,33 +126,34 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($riwayat->rekomendasi_indikator ?? [] as $item)
+                                        @forelse ($riwayat->rekomendasi_indikator as $item)
                                             <tr>
                                                 <td class="text-start">{{ $item['indikator'] }}</td>
                                                 <td class="text-start" style="text-align: justify;">
-                                                    {{ $item['rekomendasi'] }}</td>
+                                                    {{ $item['rekomendasi'] }}
+                                                </td>
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="3" class="text-muted text-center py-4">
-                                                    <em>Tidak ada indikator dengan nilai akhir di bawah 70.</em>
+                                                <td colspan="2" class="text-muted text-center py-4">
+                                                    <em>Tidak ada indikator dengan nilai snorm de boer di bawah 70.</em>
                                                 </td>
                                             </tr>
                                         @endforelse
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <a href="{{ route('riwayat.cetak', $riwayat->id) }}" class="btn btn-dark" target="_blank">
-                            Cetak
-                        </a>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <a href="{{ route('riwayat.cetak', $riwayat->id) }}" class="btn btn-dark" target="_blank">
+                                Cetak
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     @endforeach
 @endsection

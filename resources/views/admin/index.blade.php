@@ -42,7 +42,7 @@
                         @empty
                             <tr>
                                 <td colspan="3" class="text-muted text-center py-4">
-                                    <em>Tidak ada indikator dengan nilai akhir di bawah 70.</em>
+                                    <em>Tidak ada indikator dengan nilai snorm de boer di bawah 70.</em>
                                 </td>
                             </tr>
                         @endforelse

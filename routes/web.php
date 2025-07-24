@@ -103,6 +103,7 @@ Route::middleware(['auth'])->group(function () {
         'show'
     ]);
     Route::get('/riwayat/cetak/{id}', [RiwayatPerhitunganController::class, 'cetakPDF'])->name('riwayat.cetak');
+    Route::post('/perhitungan/reset', [PerhitunganController::class, 'resetPerhitungan'])->name('perhitungan.reset');
 
     //Manager
     Route::get('/manager', [ManagerController::class, 'index'])->name('dashboard.manager');

@@ -493,4 +493,24 @@ class PerhitunganController extends Controller
 
     //     return redirect()->route('perhitungan.nilai-akhir')->with('success', 'Rekomendasi berhasil diperbarui.');
     // }
+
+    //Hitung Ulang
+    public function resetPerhitungan()
+    {
+        // Hapus dari tabel anak dulu
+        DB::table('pairwise_matrix')->delete();
+        DB::table('normalisasi_matriks')->delete();
+        DB::table('bobot_prioritas')->delete();
+        DB::table('uji_konsistensi')->delete();
+        DB::table('kinerja_indikator')->delete();
+        DB::table('nilai_akhir_scm')->delete();
+
+        // Lalu tabel kpi
+        DB::table('kpi')->delete();
+
+        // Kalau mau hapus histori juga:
+        // DB::table('riwayat_perhitungan')->delete();
+
+        return redirect()->route('kpi')->with('success', 'Perhitungan berhasil direset. Silakan mulai perhitungan baru.');
+    }
 }
