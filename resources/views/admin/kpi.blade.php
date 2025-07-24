@@ -76,14 +76,25 @@
                                             </div>
                                             <div class="modal-body">
                                                 <p><strong>Indikator:</strong> {{ $item->indikator }}</p>
-                                                @for ($i = 1; $i <= 5; $i++)
-                                                    <div class="mb-2">
-                                                        <label for="skor{{ $i }}">Skor Responden
-                                                            {{ $i }}</label>
-                                                        <input type="number" name="skor[]" class="form-control"
-                                                            min="1" max="5" step="0.01">
-                                                    </div>
-                                                @endfor
+
+                                                <div id="skor-container-{{ $item->id }}">
+                                                    @for ($i = 1; $i <= 3; $i++)
+                                                        <div class="mb-2">
+                                                            <label for="skor{{ $i }}">Skor Responden
+                                                                {{ $i }}</label>
+                                                            <input type="number" name="skor[]" class="form-control"
+                                                                min="1" max="5" step="0.01">
+                                                        </div>
+                                                    @endfor
+                                                </div>
+
+                                                <!-- Tombol Tambah Responden -->
+                                                <div class="text-center mt-3">
+                                                    <button type="button" class="btn btn-dark btn-sm"
+                                                        onclick="tambahKolomSkor({{ $item->id }})">
+                                                        <i class="fas fa-plus"></i> Tambah Responden
+                                                    </button>
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -93,6 +104,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         @empty
                             <tr>
                                 <td colspan="7" class="text-center text-muted">Belum ada data KPI.</td>
@@ -115,3 +127,37 @@
     </div>
 
 @endsection
+
+<script>
+    let jumlahKolomMap = {};
+
+    function tambahKolomSkor(id) {
+        const containerId = 'skor-container-' + id;
+        const container = document.getElementById(containerId);
+
+        if (!jumlahKolomMap[id]) {
+            jumlahKolomMap[id] = container.querySelectorAll('.skor-item, .mb-2').length;
+        }
+
+        jumlahKolomMap[id]++;
+
+        const div = document.createElement('div');
+        div.className = 'mb-2';
+
+        const label = document.createElement('label');
+        label.setAttribute('for', `skor${jumlahKolomMap[id]}`);
+        label.textContent = `Skor Responden ${jumlahKolomMap[id]}`;
+
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.name = 'skor[]';
+        input.className = 'form-control';
+        input.min = '1';
+        input.max = '10';
+        input.step = '0.01';
+
+        div.appendChild(label);
+        div.appendChild(input);
+        container.appendChild(div);
+    }
+</script>

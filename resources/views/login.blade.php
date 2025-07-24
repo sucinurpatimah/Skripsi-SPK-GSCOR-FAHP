@@ -34,9 +34,13 @@
         </div>
     @endif
 
-    <div class="text-center mt-5 mb-4">
-        <h2 class="fw-bold text-uppercase">SIPASOK ARIDA</h2>
-        <h5 class="fw-bold text-uppercase">(Sistem Informasi Pengukuran Kinerja Rantai Pasok) </h5>
+    <div class="text-center mt-3 mb-3">
+        <img src="{{ asset('assets/img/logo_sipasok.png') }}" alt="Logo SIPASOK ARIDA"
+            style="max-width: 300px; height: auto; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.1));">
+        <div class="mt-2 text-muted" style="font-size: 0.95rem; font-weight: 500;">
+            (Sistem Informasi Pengukuran Kinerja Rantai Pasok<br>
+            PT. Arteria Daya Mulia)
+        </div>
     </div>
 
     <div class="mx-auto"
