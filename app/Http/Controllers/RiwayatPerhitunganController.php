@@ -95,7 +95,7 @@ class RiwayatPerhitunganController extends Controller
             'rekomendasi' => $rekomendasi,
         ]);
 
-        return redirect()->route('riwayat.index')->with('success', 'Perhitungan disimpan.');
+        return redirect()->route('riwayat.index')->with('success', 'Hasil Perhitungan Berhasil Disimpan Sebagai Riwayat Perhitungan.');
     }
 
     public function destroy($id)
@@ -145,22 +145,32 @@ class RiwayatPerhitunganController extends Controller
     {
         $riwayat = RiwayatPerhitungan::findOrFail($id);
 
-        // Pastikan hasil_per_indikator adalah array
+        // Decode hasil_per_indikator
         $hasilPerIndikator = is_string($riwayat->hasil_per_indikator)
             ? json_decode($riwayat->hasil_per_indikator, true)
             : $riwayat->hasil_per_indikator;
 
-        // Ambil rekomendasi perbaikan berdasarkan nilai snorm < 70
+        // Urutan variabel
+        $urutanVariabel = ['Plan', 'Make', 'Source', 'Deliver', 'Return'];
+
+        // Sorting hasil_per_indikator
+        usort($hasilPerIndikator, function ($a, $b) use ($urutanVariabel) {
+            return array_search($a['variabel'], $urutanVariabel) <=> array_search($b['variabel'], $urutanVariabel);
+        });
+
+        // Ambil rekomendasi perbaikan berdasarkan nilai snorm < 70 dan urutkan juga
         $rekomendasiIndikator = collect($hasilPerIndikator)
             ->filter(fn($item) => $item['snorm_de_boer'] < 70)
             ->map(function ($item) {
                 $kpi = KPI::with(['scor', 'gscor'])->where('indikator', $item['indikator'])->first();
 
                 return [
+                    'variabel' => $item['variabel'],
                     'indikator' => $item['indikator'],
                     'rekomendasi' => $kpi->scor->rekomendasi_bawaan ?? ($kpi->gscor->rekomendasi_bawaan ?? '-'),
                 ];
             })
+            ->sortBy(fn($item) => array_search($item['variabel'], $urutanVariabel))
             ->values();
 
         return Pdf::loadView('cetak_pdf', [

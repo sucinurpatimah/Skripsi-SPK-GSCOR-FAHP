@@ -43,7 +43,7 @@
                             <th class="text-center">Consistency Ratio (CR)</th>
                             <td class="text-center">{{ number_format($hasil->cr, 2) }}</td>
                         </tr>
-                        <tr>
+                        <tr class="{{ $hasil->status == 'Konsisten' ? 'bg-success text-white' : 'bg-danger text-white' }}">
                             <th class="text-center">Status</th>
                             <td class="text-center fw-bold">
                                 {{ $hasil->status }}
@@ -54,11 +54,13 @@
             </div>
 
             {{-- Tombol Lanjut Normalisasi SNORM de Boer --}}
-            <div class="d-flex justify-content-center mt-4">
-                <a href="{{ route('perhitungan.snorm') }}" class="btn btn-dark">
-                    Lanjut Normalisasi SNORM de Boer
-                </a>
-            </div>
+            @if ($hasil->status == 'Konsisten')
+                <div class="d-flex justify-content-center mt-4">
+                    <a href="{{ route('perhitungan.snorm') }}" class="btn btn-dark">
+                        Lanjut Normalisasi SNORM de Boer
+                    </a>
+                </div>
+            @endif
         </div>
     @else
         <div class="text-center text-muted mt-4">

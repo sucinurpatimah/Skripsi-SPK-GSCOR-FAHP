@@ -187,7 +187,25 @@
         </table>
     @endif
 
-
+    <!-- Catatan Istilah dan Penjelasan -->
+    <div style="margin-top: 30px; text-align: justify;">
+        <strong>Catatan:</strong>
+        <ul style="padding-left: 20px;">
+            <li><strong>Bobot Prioritas:</strong> Nilai kepentingan relatif suatu indikator terhadap indikator lainnya
+                berdasarkan hasil perbandingan berpasangan dengan metode Fuzzy AHP.</li>
+            <li><strong>Snorm De Boer:</strong> Nilai yang dihasilkan dari proses normalisasi menggunakan metode Snorm
+                De Boer untuk menentukan performa masing-masing indikator.</li>
+            <li><strong>Nilai Akhir SCM:</strong> Nilai hasil kali antara bobot prioritas dengan nilai Snorm De Boer
+                yang merepresentasikan kinerja supply chain pada indikator tersebut.</li>
+            <li><strong>Indikator dengan nilai Snorm De Boer di bawah 70</strong> dianggap memerlukan perbaikan karena
+                tidak memenuhi standar kinerja rantai pasok yang telah ditetapkan.</li>
+            <li><strong>Total Nilai Akhir SCM di atas 70</strong> menunjukkan bahwa kinerja supply chain management
+                (SCM) secara keseluruhan telah berjalan dengan baik pada perusahaan tersebut.</li>
+            <li><strong>Indikator yang digunakan</strong> dalam analisis ini
+                disesuaikan dengan kebutuhan dan kondisi aktual perusahaan, sehingga hasil pengukuran lebih relevan dan
+                akurat.</li>
+        </ul>
+    </div>
 
     <!-- Footer -->
     <div class="footer">

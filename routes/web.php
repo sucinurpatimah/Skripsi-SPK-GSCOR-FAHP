@@ -77,7 +77,7 @@ Route::middleware(['auth'])->group(function () {
     //Kelola Perhitungan
     Route::get('Kelola-Perhitungan', [PerhitunganController::class, 'perhitungan'])->name('perhitungan');
     // Proses pembuatan matriks perbandingan berpasangan dan normalisasi matriks
-    Route::post('Pairwise-Comparison-Matrix/generate', [PerhitunganController::class, 'generatePairwise'])->name('perhitungan.pairwise.generate');
+    Route::post('Pairwise-Comparison-Matrix/generate', [PerhitunganController::class, 'pairwise'])->name('perhitungan.pairwise.generate');
     Route::get('Pairwise-Comparison-Matrix', [PerhitunganController::class, 'showNormalized'])->name('perhitungan.pairwise');
     Route::post('Pairwise-Comparison-Matrix/normalize', [PerhitunganController::class, 'normalisasiPairwise'])
         ->name('perhitungan.pairwise.normalisasi');

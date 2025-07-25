@@ -16,7 +16,6 @@ class PerhitunganController extends Controller
     //     return view('admin/perhitungan');
     // }
 
-    //Tahap Perhitungan Matriks Perbandingan Berpasangan
     public function pairwise()
     {
         $kpis = KPI::orderByRaw("FIELD(variabel, 'Plan', 'Source', 'Make', 'Deliver', 'Return')")
@@ -27,7 +26,7 @@ class PerhitunganController extends Controller
             return redirect()->route('kpi')->with('error', 'Minimal harus ada 5 indikator KPI.');
         }
 
-        // Label
+        // Buat label
         $singkatanMap = [
             'Plan' => 'P',
             'Source' => 'S',
@@ -43,7 +42,27 @@ class PerhitunganController extends Controller
             $labels[$kpi->id] = $s . $labelCount[$s];
         }
 
-        // Ambil matriks nilai
+        // Hitung & simpan nilai ke pairwise_matrix
+        foreach ($kpis as $row) {
+            foreach ($kpis as $col) {
+                $nilai = ($col->skor != 0) ? $row->skor / $col->skor : 0;
+
+                // Simpan ke database
+                DB::table('pairwise_matrix')->updateOrInsert(
+                    [
+                        'indikator1_id' => $row->id,
+                        'indikator2_id' => $col->id
+                    ],
+                    [
+                        'nilai' => round($nilai, 4),
+                        'updated_at' => now(),
+                        'created_at' => now()
+                    ]
+                );
+            }
+        }
+
+        // Ambil ulang nilai dari DB untuk ditampilkan
         $values = [];
         foreach ($kpis as $row) {
             $baris = [];
@@ -52,23 +71,25 @@ class PerhitunganController extends Controller
                     ->where('indikator1_id', $row->id)
                     ->where('indikator2_id', $col->id)
                     ->value('nilai');
-                $baris[] = $nilai !== null ? $nilai : '-';
+                $baris[$col->id] = $nilai ?? '-';
             }
-            $values[] = $baris;
+            $values[$row->id] = $baris;
         }
 
         // Hitung total kolom
         $totals = [];
-        for ($c = 0; $c < count($kpis); $c++) {
+        foreach ($kpis as $col) {
             $sum = 0;
-            foreach ($values as $r) {
-                $sum += is_numeric($r[$c]) ? $r[$c] : 0;
+            foreach ($kpis as $row) {
+                $sum += is_numeric($values[$row->id][$col->id]) ? $values[$row->id][$col->id] : 0;
             }
-            $totals[] = $sum;
+            $totals[$col->id] = round($sum, 4);
         }
 
-        return view('admin/pairwise', compact('kpis', 'labels', 'values', 'totals'));
+        return view('admin.pairwise', compact('kpis', 'labels', 'values', 'totals'));
     }
+
+
 
     public function normalisasiPairwise()
     {
@@ -457,7 +478,7 @@ class PerhitunganController extends Controller
 
     public function generateNilaiAkhir()
     {
-        $indikator = KPI::with(['bobotPrioritas', 'kinerjaIndikator', 'scor', 'greenscor'])->get();
+        $indikator = KPI::with(['bobotPrioritas', 'kinerjaIndikator', 'scor', 'gscor'])->get();
 
         foreach ($indikator as $item) {
             if (!$item->bobotPrioritas || !$item->kinerjaIndikator) {

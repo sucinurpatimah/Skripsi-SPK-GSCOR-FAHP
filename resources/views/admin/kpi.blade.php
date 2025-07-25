@@ -17,8 +17,9 @@
                 <table class="table table-bordered mb-0">
                     <thead class="bg-dark text-white">
                         <tr>
+                            <th class="text-center align-middle" style="width: 40px;">No</th>
                             <th class="text-center align-middle">Variabel</th>
-                            <th class="text-center align-middle">Atribut</th>
+                            <th class="text-center align-middle" style="width: 100px;">Atribut</th>
                             <th class="text-center align-middle">Indikator</th>
                             <th class="text-center align-middle">Keterangan</th>
                             <th class="text-center align-middle">Kategori</th>
@@ -35,6 +36,7 @@
                     <tbody>
                         @forelse ($dataKPI as $item)
                             <tr>
+                                <td class="text-center">{{ $loop->iteration }}</td>
                                 <td class="text-center">{{ $item->variabel }}</td>
                                 <td class="text-center">{{ $item->atribut }}</td>
                                 <td class="text-center" style="width: 100px;">{{ $item->indikator }}</td>
