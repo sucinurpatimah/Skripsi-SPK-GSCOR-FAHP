@@ -118,4 +118,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('Laporan', [ManagerController::class, 'laporan'])->name('manager.laporan');
 });
 
-Route::post('/logout', [SesiController::class, 'logout'])->name('logout');
+Route::put('/logout', [SesiController::class, 'logout'])->name('logout');
