@@ -63,8 +63,10 @@
             @endif
         </div>
     @else
-        <div class="text-center text-muted mt-4">
-            Belum ada perhitungan uji konsistensi. Silakan klik tombol Generate.
+        <div class="d-flex justify-content-center align-items-center">
+            <em class="text-muted">
+                Belum ada perhitungan uji konsistensi. Silakan klik tombol Generate.
+            </em>
         </div>
     @endif
 

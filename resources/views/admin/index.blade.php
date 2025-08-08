@@ -8,10 +8,22 @@
 
     {{-- Grafik  --}}
     <div class="card mt-4 mb-4">
-        <div class="card-header bg-dark text-white fw-bold"><i class="fas fa-chart-area me-1"></i>Diagram Hasil Perhitungan
-            Pengukuran Kinerja</div>
-        <div class="card-body">
-            <canvas id="myAreaChart" width="100%" height="30"></canvas>
+        <div class="card-header bg-dark text-white fw-bold">
+            <i class="fas fa-chart-area me-1"></i>
+            Diagram Hasil Perhitungan Pengukuran Kinerja
+        </div>
+        <div class="card-body text-center">
+
+            @if ($hasil->isEmpty())
+                <div class="py-5">
+                    <em class="text-muted text-center">
+                        Belum Ada Hasil Pengukuran Kinerja Rantai Pasok.
+                    </em>
+                </div>
+            @else
+                <canvas id="myAreaChart" width="100%" height="30"></canvas>
+            @endif
+
         </div>
     </div>
 
@@ -42,7 +54,8 @@
                         @empty
                             <tr>
                                 <td colspan="3" class="text-muted text-center py-4">
-                                    <em>Tidak ada indikator dengan nilai snorm de boer di bawah 70.</em>
+                                    <em>Belum Ada Rekomendasi Perbaikan Kinerja Rantai Pasok.
+                                        <br>Silahkan Lakukan Perhitungan Kinerja Rantai Pasok Terlebih Dahulu.</em>
                                 </td>
                             </tr>
                         @endforelse
@@ -53,38 +66,39 @@
     </div>
 
 
-    <script>
-        // Ambil label indikator dan nilainya dari PHP
-        const labels = @json($labelsSingkat);
-        const dataNilaiAkhir = @json($hasil->pluck('nilai_akhir'));
+    @if (!$hasil->isEmpty())
+        <script>
+            const labels = @json($labelsSingkat);
+            const dataNilaiAkhir = @json($hasil->pluck('nilai_akhir'));
 
-        const ctx = document.getElementById('myAreaChart').getContext('2d');
-        const myAreaChart = new Chart(ctx, {
-            type: 'line', // ubah menjadi line chart
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Nilai Akhir Kinerja Rantai Pasok per-Indikator',
-                    data: dataNilaiAkhir,
-                    fill: false,
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 2,
-                    tension: 0.3, // membuat garis sedikit melengkung
-                    pointBackgroundColor: 'rgba(54, 162, 235, 1)', // titik di garis
-                    pointRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 10 // Sesuaikan skala jika perlu
+            const ctx = document.getElementById('myAreaChart').getContext('2d');
+            const myAreaChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Nilai Akhir Kinerja Rantai Pasok per-Indikator',
+                        data: dataNilaiAkhir,
+                        fill: false,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10
+                        }
                     }
                 }
-            }
-        });
-    </script>
+            });
+        </script>
+    @endif
 
 @endsection

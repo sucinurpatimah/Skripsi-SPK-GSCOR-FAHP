@@ -13,7 +13,7 @@
     <div class="mt-4">
         <h4 class="fw-bold text-center mb-3">Matriks Perbandingan Berpasangan</h4>
         <div class="table-responsive">
-            <table class="table table-bordered align-middle">
+            <table class="table table-bordered align-middle w-100">
                 <thead class="bg-dark text-white">
                     <tr>
                         <th class="text-center">Indikator</th>
@@ -23,20 +23,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($values as $indikatorId => $row)
+                    @php
+                        $hasData = false;
+                        foreach ($values as $row) {
+                            foreach ($row as $v) {
+                                if (is_numeric($v) && $v != 0) {
+                                    $hasData = true;
+                                    break 2;
+                                }
+                            }
+                        }
+                    @endphp
+
+                    @if (!$hasData)
                         <tr>
-                            <th class="text-center bg-dark text-white">{{ $labels[$indikatorId] ?? '-' }}</th>
-                            @foreach ($row as $v)
-                                <td class="text-center">{{ is_numeric($v) ? number_format($v, 2) : '-' }}</td>
+                            <td colspan="{{ count($labels) + 1 }}" class="text-center text-muted"
+                                style="height: 200px; vertical-align: middle;">
+                                Belum Ada Hasil Perhitungan Matriks Perbandingan Berpasangan
+                            </td>
+                        </tr>
+                    @else
+                        @foreach ($values as $indikatorId => $row)
+                            <tr>
+                                <th class="text-center bg-dark text-white">{{ $labels[$indikatorId] ?? '-' }}</th>
+                                @foreach ($row as $v)
+                                    <td class="text-center">{{ is_numeric($v) ? number_format($v, 2) : '-' }}</td>
+                                @endforeach
+                            </tr>
+                        @endforeach
+                        <tr class="table-secondary fw-bold">
+                            <td class="text-center">Total</td>
+                            @foreach ($totals as $total)
+                                <td class="text-center">{{ number_format($total, 2) }}</td>
                             @endforeach
                         </tr>
-                    @endforeach
-                    <tr class="table-secondary fw-bold">
-                        <td class="text-center">Total</td>
-                        @foreach ($totals as $total)
-                            <td class="text-center">{{ number_format($total, 2) }}</td>
-                        @endforeach
-                    </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -53,21 +74,28 @@
     </div>
 
     {{-- Matriks Normalisasi --}}
-    @if (!empty($normalized) && count($normalized))
-        <div class="mt-5">
-            <h4 class="fw-bold text-center mb-3">Hasil Normalisasi Matriks Perbandingan Berpasangan</h4>
-            <div class="table-responsive">
-                <table class="table table-bordered align-middle mb-0">
-                    <thead class="bg-dark text-white">
+    <div class="mt-5">
+        <h4 class="fw-bold text-center mb-3">Hasil Normalisasi Matriks Perbandingan Berpasangan</h4>
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle mb-0 w-100">
+                <thead class="bg-dark text-white">
+                    <tr>
+                        <th class="text-center align-middle">Indikator</th>
+                        @foreach ($labels as $id => $label)
+                            <th class="text-center align-middle">{{ $label }}</th>
+                        @endforeach
+                        <th class="text-center align-middle">Bobot Prioritas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (empty($normalized) || count($normalized) === 0)
                         <tr>
-                            <th class="text-center align-middle">Indikator</th>
-                            @foreach ($labels as $id => $label)
-                                <th class="text-center align-middle">{{ $label }}</th>
-                            @endforeach
-                            <th class="text-center align-middle">Bobot Prioritas</th>
+                            <td colspan="{{ count($labels) + 2 }}" class="text-center text-muted"
+                                style="height: 200px; vertical-align: middle;">
+                                Belum Ada Perhitungan Normalisasi Matriks Perbandingan Berpasangan
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
+                    @else
                         @foreach ($normalized as $indikatorId => $row)
                             <tr>
                                 <th class="text-center bg-dark text-white">{{ $labels[$indikatorId] ?? '-' }}</th>
@@ -83,10 +111,11 @@
                                 </td>
                             </tr>
                         @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    @endif
+                </tbody>
+            </table>
         </div>
-    @endif
+    </div>
+
 
 @endsection
